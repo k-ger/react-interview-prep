@@ -179,7 +179,7 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
-            `What structure or Type is Delegate?  What is it inherited from? What inherits it?`,
+            `What structure or Type is Delegate?  What is it derived from? What inherits it?`,
             `System.Object > System.Delegate > System.MulticastDelegate`,
             Category.DOTNET
         ));
@@ -191,7 +191,6 @@ export default class DataService {
             <br> -When you pass a reference object as a parameter or assign it to a variable, you're in fact passing its reference. The reference (not the referenced object) can be allocated both on the stack or on the heap.
             <br> -Value types (derived from System.ValueType, e.g. int, bool, char, enum and any struct) can be allocated on the heap or on the stack, depending on where they were declared.
             <br> -While the objects stored on the stack are gone when the containing stack frame is popped, memory used by objects stored on the heap needs to be freed up by the garbage collector.
-    
             `,
             Category.DOTNET
         ));
@@ -238,6 +237,22 @@ export default class DataService {
         questions.push(new Question(id++,
             `When a struct is inside a class, where is memory allocated for it (stack or heap?)`,
             `Heap`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
+            `How do you compare objects in C#?`,
+            `There are 2 types of equality: <strong>value equality</strong> (equivalence) and <strong>reference equality</strong> (identity).
+            </br></br><strong>Reference equality</strong> means that two object references refer to the same underlying object.  This applies only to reference types.
+            Use <code>Object.ReferenceEquals(ob1, ob2)</code> to compare ref types.
+            </br></br><strong>Value equality</strong> means that two objects contain the same value or values.  For primitives, use <code>==</code>.
+            Can use ob1.Equals(ob2).  For ref types, need to implement following steps:
+            </br></br>1. Override the virtual <code>Equals()</code> method.
+            </br>2. Implement the <code>IEquatable</code> interface by providing a type-specific Equals method. This is where the actual equivalence comparison is performed.
+            </br>3. Optional but recommended: Overload the <code>==</code> and <code>!=</code> operators.
+            </br>4. Override <code>Object.GetHashCode</code> so that two objects that have value equality produce the same hash code.
+            </br>5. Optional: To support definitions for "greater than" or "less than," implement the <code>IComparable</code> interface for your type, 
+            and also overload the <code><=</code> and <code>>=</code> operators.
+            `,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -431,11 +446,21 @@ export default class DataService {
     
         //------Angular--------//
         questions.push(new Question(id++,
-            `What's new in Angular 8?`,
-            `1. Ivy: new renderer.  Opt-in in Angular 8, default in 9. Includes performance improvements, template type-checking improvements.
+            `What's new in Angular?`,
+            `<strong>Angular 9</strong>
+            </br>1. Ivy: new renderer.  Opt-in in Angular 8, default in 9. Includes performance improvements, template type-checking improvements.
             </br>2. Support for TS 3.4.
             </br>3. Forms: FormArray.clear, markAllAsTouched.
-            </br>4. Many more...
+            </br>4. Many more...</br></br>
+            <strong>Angular 10</strong>
+            </br>1. Strict project setup - enables strict mode in TS
+            </br>2. Typescript 3.9
+            </br>3. Many more performance enhancements and bug fixes...</br></br>
+            <strong>Angular 11</strong>
+            </br>1. TSLint support ends, ESLint now used
+            </br>2. Typescript 4.0
+            </br>3. Webpack 5
+            
             `,
             Category.ANGULAR
         ));

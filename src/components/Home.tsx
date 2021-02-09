@@ -19,9 +19,14 @@ class Home extends Component<IHomeProps, IHomeState> {
 
     render () {
         return (
-            <div className="">
-                <nav className="bg-gray-800">
-                    <div className="max-w-7xl mx-auto px-2 py-2 sm:px-6 lg:px-8">
+            <div>
+                <nav className="bg-gray-800 ">
+                    <div className="max-w-7xl mx-auto px-2 py-2 sm:px-6 lg:px-8 sm:flex sm:justify-start">
+                        <div className="whitespace-nowrap text-center sm:text-left">
+                            <h1 className="text-white pr-0 pb-2 sm:pb-0 sm:mr-8 text-l sm:text-2xl font-bold sm:pr-4 cursor-default tracking-tighter ">
+                                interviewPrep
+                            </h1>
+                        </div>
                         <div className="flex space-x-4 flex-wrap items-center justify-center sm:items-stretch sm:justify-start">
                             <a href="#" className={this._getTabClassName(Category.DOTNET)} onClick={() => {this._selectTab(Category.DOTNET)}}>{CategoryName.get(Category.DOTNET)}</a>
                             <a href="#" className={this._getTabClassName(Category.ANGULAR)} onClick={() => {this._selectTab(Category.ANGULAR)}}>{CategoryName.get(Category.ANGULAR)}</a>
@@ -56,10 +61,10 @@ class Home extends Component<IHomeProps, IHomeState> {
     }
 
     private _getTabClassName = (tab: Category): string => {
-        let classNameSelected = `bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium`;
-        let className = `text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium`;
+        let classNameSelected = `bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap`;
+        let className = `text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap`;
 
-        return (tab == this.state.categoryId) ? classNameSelected : className;
+        return (tab === this.state.categoryId) ? classNameSelected : className;
     }
 
     private _selectTab = (tab: Category) => {
