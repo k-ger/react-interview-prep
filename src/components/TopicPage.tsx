@@ -103,7 +103,7 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
                             {/* {q.q()} */}
                         </div>
                         {q.isShowA() ?
-                            <div className="shadow-inner p-2 pl-4 mt-1 ml-4 lg:ml-0 text-sm text-indigo-900 lg:mt-0 lg:col-span-2 bg-gray-100 border-l-4 border-indigo-600" dangerouslySetInnerHTML={{ __html: q.a() }}>
+                            <div className="shadow-inner p-2 pl-4 mt-1 ml-4 lg:ml-0 text-sm text-indigo-900 lg:mt-0 lg:col-span-2 bg-gray-100 border-l-4 border-indigo-600 overflow-x-hidden" dangerouslySetInnerHTML={{ __html: q.a() }}>
 
                             </div>
                             : ''}
@@ -126,7 +126,7 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
                         <div className="text-sm font-medium text-gray-600 pb-1">
                             {l.name()}
                         </div>
-                        <div className="shadow-inner p-2 pl-4 mt-1 ml-4 sm:ml-0 text-sm text-indigo-900 cursor-pointer hover:bg-gray-100 sm:mt-0 sm:col-span-2 bg-gray-100 border-l-4 border-indigo-600 ">
+                        <div className="shadow-inner p-2 pl-4 mt-1 ml-4 sm:ml-0 text-sm text-indigo-900 cursor-pointer hover:bg-gray-100 sm:mt-0 sm:col-span-2 bg-gray-100 border-l-4 border-indigo-600 overflow-x-hidden">
                             <a className="hover:underline" href={l.url()}>{l.url()}</a>
                         </div>
                     </div>
@@ -148,7 +148,7 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
                         <div className="text-sm font-medium text-gray-600 pb-1">
                             {s.name()}
                         </div>
-                        <div className="shadow-inner p-2 pl-4 mt-1 ml-4 sm:ml-0 text-sm text-indigo-900 cursor-pointer hover:bg-gray-100 sm:mt-0 sm:col-span-2 bg-gray-100 border-l-4 border-indigo-600">
+                        <div className="shadow-inner p-2 pl-4 mt-1 ml-4 sm:ml-0 text-sm text-indigo-900 cursor-pointer hover:bg-gray-100 sm:mt-0 sm:col-span-2 bg-gray-100 border-l-4 border-indigo-600 overflow-x-hidden">
                             <a className="hover:underline" href={s.url()}>{s.url()}</a>
                         </div>
                     </div>

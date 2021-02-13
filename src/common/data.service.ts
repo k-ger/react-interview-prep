@@ -55,6 +55,11 @@ export default class DataService {
             Category.ANGULAR
         ));
         links.push(new Link(id++,
+            "InterviewBit - Angular Interview Questions",
+            "https://www.interviewbit.com/react-interview-questions/",
+            Category.ANGULAR
+        ));
+        links.push(new Link(id++,
             "Database Concurrency pdf",
             "https://bobpusateri.blob.core.windows.net/shared/DemoData/IsolationLevelsDeck.pdf",
             Category.SQL
@@ -521,7 +526,7 @@ export default class DataService {
         //     ``,
         //     2
         // ));
-    
+        
         //------JS/Web/DOM--------//
         questions.push(new Question(id++,
             `What are the different kinds of web services?`,
