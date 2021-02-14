@@ -56,7 +56,7 @@ export default class DataService {
         ));
         links.push(new Link(id++,
             "InterviewBit - Angular Interview Questions",
-            "https://www.interviewbit.com/react-interview-questions/",
+            "https://www.interviewbit.com/angular-interview-questions/",
             Category.ANGULAR
         ));
         links.push(new Link(id++,
