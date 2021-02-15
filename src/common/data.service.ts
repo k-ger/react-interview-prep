@@ -55,6 +55,11 @@ export default class DataService {
             Category.ANGULAR
         ));
         links.push(new Link(id++,
+            "InterviewBit - Angular Interview Questions",
+            "https://www.interviewbit.com/react-interview-questions/",
+            Category.ANGULAR
+        ));
+        links.push(new Link(id++,
             "Database Concurrency pdf",
             "https://bobpusateri.blob.core.windows.net/shared/DemoData/IsolationLevelsDeck.pdf",
             Category.SQL
@@ -521,7 +526,7 @@ export default class DataService {
         //     ``,
         //     2
         // ));
-    
+        
         //------JS/Web/DOM--------//
         questions.push(new Question(id++,
             `What are the different kinds of web services?`,
@@ -613,8 +618,8 @@ export default class DataService {
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
-            `What is variable hoisting?  What gets hoiseted and what doesn't?`,
-            `Hoisting: initialized with undefined before the code is run.  This means they are accessible in their enclosing scope even before they are declared.
+            `What is variable hoisting?  What gets hoisted and what doesn't?`,
+            `Hoisting: initialized with <code>undefined</code> before the code is run.  This means they are accessible in their enclosing scope even before they are declared.
             Function declarations and <code>var</code> will get hoisted.`,
             Category.JSWEBDOM
         ));
