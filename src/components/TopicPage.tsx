@@ -43,7 +43,7 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
 
     render() {
         return (
-            <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div className="bg-white shadow overflow-hidden rounded-md sm:rounded-lg">
                 <div className="flex sm:block justify-center px-4 sm:px-6">
                     <div className="sm:ml-10 space-x-12 sm:space-x-12 flex">
                         <a href="#" className={this._getTabClassName(TopicTab.QUESTIONS)} onClick={() => { this._selectTab(TopicTab.QUESTIONS) }}>
