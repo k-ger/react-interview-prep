@@ -2,6 +2,8 @@ import { Component } from "react";
 import TopicPage from "./TopicPage";
 import { Category, CategoryDescription, CategoryName } from "../common/models";
 import Icon, { IconType } from "../icons/Icon";
+import FadeInContainer from "./FadeInContainer";
+import TextAnimationContainer from "./TextAnimationContainer";
 
 interface IHomeProps {
 
@@ -20,10 +22,9 @@ class Home extends Component<IHomeProps, IHomeState> {
 
     render() {
         return (
-            <div>
+            <FadeInContainer className="flex-auto">
                 <div className="w-full">
-
-                    <nav className="bg-gray-800 ">
+                    <nav className="bg-gray-800">
                         <div className="max-w-7xl mx-auto px-2 py-2 sm:px-6 lg:px-8 sm:flex sm:justify-start">
                             <div className="flex items-center  whitespace-nowrap justify-center sm:justify-start">
                                 <Icon iconType={IconType.Learn} className='w-6 pb-2 sm:pb-0 sm:w-8'></Icon>
@@ -45,7 +46,7 @@ class Home extends Component<IHomeProps, IHomeState> {
                     <header className="bg-white shadow">
                         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                             <h1 className="text-l font-bold leading-tight text-gray-900">
-                                {CategoryDescription.get(this.state.categoryId)}
+                            {this._getCategoryDescription(this.state.categoryId)}
                             </h1>
                         </div>
                     </header>
@@ -57,7 +58,8 @@ class Home extends Component<IHomeProps, IHomeState> {
                         </div>
                     </div>
                 </main>
-            </div>
+            </FadeInContainer>
+
         );
     }
 
@@ -70,6 +72,13 @@ class Home extends Component<IHomeProps, IHomeState> {
         let className = `text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap`;
 
         return (tab === this.state.categoryId) ? classNameSelected : className;
+    }
+
+    private _getCategoryDescription = (categoryId: number) => {
+        return (
+            
+            <TextAnimationContainer text={CategoryDescription.get(categoryId)}></TextAnimationContainer>
+        );
     }
 
     private _selectTab = (tab: Category) => {

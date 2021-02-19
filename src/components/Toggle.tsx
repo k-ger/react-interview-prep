@@ -22,7 +22,7 @@ export class Toggle extends Component<IToggleProps, IToggleState> {
 
     render() {
         return (
-            <div>
+            <div className="mt-2">
                 <div className="relative inline-block w-8 mr-2 align-middle select-none">
                     <input type="checkbox" name="toggle" id="toggle" checked={this.state.isChecked} className="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-4 appearance-none cursor-pointer focus:outline-none" onChange={this.toggleClicked} />
                     <label htmlFor="toggle" className="toggle-label block overflow-hidden h-4 rounded-full bg-gray-300 cursor-pointer"></label>
