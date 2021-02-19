@@ -9,6 +9,11 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Home></Home>
+        <footer className="">
+          <div className="mb-2 text-gray-400 text-xs sm:text-sm text-center">
+              ©2021 Created with React Create App, Tailwind CSS.
+          </div>
+        </footer>
       </BrowserRouter>
     );
   }

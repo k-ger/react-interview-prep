@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,6 +15,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   @apply bg-gray-100;
   overflow: overlay;
+  height: 100%;
 }
 
 code {
@@ -18,7 +23,11 @@ code {
     monospace;
 }
 
-
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 /* begin toggle region */
 
 .toggle-checkbox:checked {
