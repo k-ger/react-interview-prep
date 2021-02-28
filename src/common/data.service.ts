@@ -164,6 +164,16 @@ export default class DataService {
             `angular-questions.html`,
             Category.ANGULAR
         ));
+        links.push(new Link(id++,
+            "The System Design Primer",
+            "https://github.com/donnemartin/system-design-primer/blob/master/README.md",
+            Category.GENERAL
+        ));
+        links.push(new Link(id++,
+            "InfoQ Youtube channel",
+            "https://www.youtube.com/nctv/videos",
+            Category.GENERAL
+        ));
         // links.push(new Link(id++,
         //     "",
         //     "",
