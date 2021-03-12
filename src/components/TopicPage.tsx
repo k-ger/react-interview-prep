@@ -101,8 +101,7 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
                 return (
                     <div key={q.id()} className="px-4 py-5 cursor-pointer hover:bg-gray-100 m-2 shadow" onClick={() => { this._toggleShowAnswer(q) }}>
                         <FadeInContainer>
-                            <div className="text-sm font-medium text-gray-600 pb-1" dangerouslySetInnerHTML={{ __html: q.q() }}>
-                                {/* {q.q()} */}
+                            <div className="text-sm text-gray-600 pb-1" style={{fontWeight: (q.a() ? 500 : 900) }} dangerouslySetInnerHTML={{ __html: q.q() }}>
                             </div>
                         </FadeInContainer>
                         {q.isShowA() ?

@@ -45,11 +45,6 @@ export default class DataService {
             Category.GENERAL
         ));
         links.push(new Link(id++,
-            "C# Version History",
-            "https://www.tutorialsteacher.com/csharp/csharp-version-history",
-            Category.DOTNET
-        ));
-        links.push(new Link(id++,
             "TypeScript Deep Dive pdf",
             "https://react-etc.net/files/typescript-book/typescript.pdf",
             Category.ANGULAR
@@ -63,6 +58,16 @@ export default class DataService {
             "Database Concurrency pdf",
             "https://bobpusateri.blob.core.windows.net/shared/DemoData/IsolationLevelsDeck.pdf",
             Category.SQL
+        ));
+        links.push(new Link(id++,
+            "TutorialsTeacher C#",
+            "https://www.tutorialsteacher.com/csharp/csharp-tutorials",
+            Category.DOTNET
+        ));
+        links.push(new Link(id++,
+            "C# Version History",
+            "https://www.tutorialsteacher.com/csharp/csharp-version-history",
+            Category.DOTNET
         ));
         links.push(new Link(id++,
             "CS Level Up Series Introduction - DEV Community",
@@ -199,7 +204,7 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
-            `Stack and Heap.  What are they, what are they for, what's the difference between them.`,
+            `Stack and Heap.  What are they, what are they for, what's the difference between them?`,
             `Places in memory where an object can be stored. </br>
             - Objects allocated on the stack are available only inside of a stack frame (execution of a method), while objects allocated on the heap can be accessed from anywhere.
             <br> -Reference types (classes, interfaces, delegates) are always allocated on the heap.
@@ -210,7 +215,7 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
-            `Task vs Thread.  What's the difference between them.`,
+            `Task vs Thread.  What's the difference between them?`,
             `A task is an abstraction that represents an async opertaion. A task encapsulates the basic unit of execution.
             A thread is a "subset of a process" or a "path of execution through a process".  
             </br>A Task can create 1 or more threads. (Thread pool threads).
@@ -219,7 +224,7 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
-            `Write a singleton without using a lock`,
+            `Write a singleton without using a lock.`,
             `<code>sealed class Singleton</br>
             {</br>
             &emsp;    private static readonly Singleton instance = new Singleton();</br>
@@ -285,6 +290,21 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
+            `HashTable vs Dictionary?`,
+            `HashTable:</br>
+            -   Loosely typed (non-generic) collection, this means it stores key-value pairs of any data types.</br>
+            -   Thread safe. </br>
+            -   Returns null if we try to find a key which does not exist.</br>
+            -   Data retrieval is slower than dictionary because of boxing-unboxing.</br>
+            </br>Dictionary: (generic version of HashTable</br>
+            -   Generic collection. So it can store key-value pairs of specific data types.</br>
+            -   Only public static members are thread safe</br>
+            -   Throws an exception if we try to find a key which does not exist.</br>
+            -   Data retrieval is faster than Hashtable.</br>
+            `,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
             `What's the difference between IEnumerable and IQueryable?`,
             `IQueryable extends IEnumerable.  Both IEnumerable and IQueryable can only move forward over a collection, can’t move backward or between the items.  
             </br>- IEnumerable Doesn’t support lazy loading, IQueryable does.
@@ -337,7 +357,7 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
-            `Managed code vs unmamaged.  Advantages and disadvantages of each.`,
+            `Managed code vs unmamaged.  Advantages and disadvantages of each?`,
             `Managed code is code executed under control of the CLR.  Benefits: can mix languages, better security (auto memory management, GC, exception handling), support version control.</br>
             Unmanaged code: executed outside the CLR, or directly by the OS. Provides low-level access to programmer, direct access to HW. Can be faster, but you need to manage memory yourself.`,
             Category.DOTNET
@@ -349,7 +369,8 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `Why are strings immutable?`,
-            `It provides automatic thread safety, and makes strings behave like an intrinsic type in a simple, effective manner. It also allows for extra efficiencies at runtime 
+            `It provides automatic thread safety. no risk of a deadlock or any concurrency issues, since when you modify a string, you are really just creating a new object in memory.
+            It makes strings behave like an intrinsic type in a simple, effective manner. It also allows for extra efficiencies at runtime 
             (such as allowing effective string interning to reduce resource usage), and has huge security advantages.`,
             Category.DOTNET
         ));
@@ -372,14 +393,40 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `.NET Core - what is it and how is it different from previous version?`,
-            `	- Cross platform: Can run on and be built on Mac, linux</br>
+            `.NET implementation that is:</br>
+            - Cross platform: Can run on and be built on Mac, linux</br>
             - Free and fully open source</br>
             - General overall upgrade, language is faster</br>
             - Folder structure cleaner, dependency grouping</br>
             - Config file is JSON, not XML - easier to read/write.  Fallbacks.</br>
             - Before, the machine you deployed on needed to have .Net fw installed.  Now the .Net core fw is included in each build, (SDK) </br>
-                this means that you can package and run core 2.2 next to core 3, for example.</br>
-            - Winforms/WPF cannot be run cross-platform`,
+            &emsp;    this means that you can package and run core 2.2 next to core 3, for example.</br>
+            - Winforms/WPF cannot be run cross-platform.</br>
+            - Used for building cross-platform console apps and ASP.NET Core Web apps and cloud services.`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
+            `.NET Framework vs .NET Standard?`,
+            `.NET Framework:</br> a .NET implementation that</br> 
+            - Runs only on Windows</br>
+            - Not open source</br>
+            - Used for building Windows desktop applications and ASP.NET Web apps running on IIS.</br>
+            </br>
+            .NET Standard:</br> a .NET implementation that is</br> 
+            - Platform agnostic</br>
+            - Open source</br>
+            - Used for <strong>building libraries</strong> that can be referenced from all .NET implementations, such as .NET Framework, .NET Core and Xamarin.`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
+            `.NET 5 - what is it?`,
+            `Announced May 2019 - A unification of .NET implementations.  (Framework, Core and Standard).  Came from the realization that maintaining similar parallel codebases for each was unnecessary.
+            Paired with C# 9. 
+            This unified version of .NET 5 will support all .NET application types: Xamarin, ASP.NET, IoT and desktop. Furthermore, it will leverage a single CoreFX/Base Class Library (BCL), 
+            two separate runtimes and runtime code bases (because it’s really hard to single source two runtimes intended to be critically different), and a single tool chain (such as dotnet CLI). 
+            The result will be uniformity across behaviors, APIs and developer experiences. 
+            For example, rather than having three implementations of the System.* APIs, there will be a single set of libraries that run on each of the different platforms.
+            `,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -514,6 +561,14 @@ export default class DataService {
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
+            `How do you handle errors in Angular?`,
+            `Handle global errors with <code>ErrorHandler</code>.  Create an Injectable (service) class that implements <code>ErrorHandler</code>
+            and handles the 2 kinds of errors: Client (JS) and Server (HTTPResponse).  To add it, add the following to RootModule: <code>providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}]</code>.
+            You can check which kind of error it is by doing the following: <code>if(error instanceof HttpErrorResponse)</code>.
+            You can use HTTPInterceptor to intercept responses and retry, transform, or handle them before passing them along to the global ErrorHandler service.`,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
             `What is an Angular Module?  How is it different from ES Module?`,
             `<strong>ES Modules</strong> (ngModules) organize code files, modularize code, promote code reuse.
             </br><strong>Angular Modules</strong> organize application, modularize application, promote application boundaries.`,
@@ -531,10 +586,16 @@ export default class DataService {
             `,
             Category.ANGULAR
         ));
+        questions.push(new Question(id++,
+            `How can you make a service not a singleton?`,
+            `When you add a service to the providers array of an @NgModule, that service will be a singleton.  When you add it to the providers array of a @Component, it will not be a singleton.
+            Non-singleton services can use the ngOnDestroy() hook.`,
+            Category.ANGULAR
+        ));
         // questions.push(new Question(id++,
         //     `?`,
         //     ``,
-        //     2
+        //     Category.ANGULAR
         // ));
         
         //------JS/Web/DOM--------//
@@ -612,6 +673,19 @@ export default class DataService {
              </br>They are easy to develop, and debug. Then can cache local storage effectively.
              </br>Disadvantages: SEO optimization is tricky, inital download size is larger, so slow to load initially.  Requires JS to be enabled.  Less escure (XSS threat).  
              Browser history may not work if the URL doesn't change.`,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
+            `What is CORS?`,
+            `Cross Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any other origins (domain, scheme, or port) 
+            than its own from which a browser should permit loading of resources. CORS relies on a mechanism by which browsers make a <strong>preflight</strong> request to the server hosting the cross-origin resource, 
+            in order to check that the server will permit the actual request. In that preflight, the browser sends headers that indicate the HTTP method and headers that will be used in the actual request.
+            </br></br>
+            For security reasons, browsers restrict cross-origin HTTP requests initiated from scripts. For example, XMLHttpRequest and the Fetch API follow the same-origin policy. 
+            This means that a web application using those APIs can only request resources from the <strong>same origin</strong> the application was loaded from unless the response from other origins includes the right CORS headers.
+            </br></br>
+            Server will respond with the following header indicating which clients can send it requests. <code>Access-Control-Allow-Origin:</code> 
+            </br> The client's domain must be included in the list.  If not, the browser will error on the server's response.`,
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
@@ -695,6 +769,57 @@ export default class DataService {
             All global JavaScript objects, functions, and variables automatically become members of the window object.
             Global variables are properties of the window object. Global functions are methods of the window object.
             Even the document object (of the HTML DOM) is a property of the window object: `,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
+            `CSS vs SCSS vs SASS vs LESS`,
+            `<strong>CSS</strong>CSS: Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a document written in a markup language such as HTML.
+            Cascading refers to the algorithm that defines how to combine property values originating from different sources. Children elements typically inherit parent's properties.
+            If property assigned multiple times (with same specificity) the last one will be used.
+            </br></br>
+            <strong>SCSS</strong>: Sassy CSS - an extension of the syntax of CSS (superset of CSS). Every valid CSS stylesheet is a valid SCSS file with the same meaning. Files using this syntax have the <code>.scss</code> extension.
+            Uses brackets, indentation not required.
+            </br></br>
+            <strong>SASS</strong>: Syntactically Awesome Style Sheets. (Older, more popular). A stylesheet language that’s compiled to CSS that lets you use features like variables, nesting, mixins, loops, inheritance and others which may not exist in CSS yet.
+            CSS <i>preprocessor</i> (actual language is SassScript) that is interpreted or complied into CSS. Files using this syntax have the <code>.sass</code> extension. Indentation required, doesn't use brackets.
+            </br></br>
+            <strong>LESS</strong>: (Leaner Style Sheets) (Newer, less popular). is a backwards-compatible language extension for CSS. Built with JS. Similar to SASS.  
+            Some differences include: LESS gives users the opportunity to only activate mixins when specific situations occur.`,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
+            `How does Bootstrap Work?`,
+            `Bootstrap is a massive collection of reusable and versatile pieces of code which are written in CSS, HTML and JavaScript.
+            Bootstrap has three primary files:
+            </br>
+            </br><strong>bootstrap.js</strong> which is a jQuery/JavaScript framework.
+            </br><strong>bootstrap.css</strong> which is a CSS framework
+            </br><strong>glyphicons</strong> which is a set of icon fonts
+            </br></br>
+            jQuery, which is quite widely used and very popular JavaScript library, is required for Bootstrap to function. It adds cross browser compatibility and simplifies JavaScript.
+            `,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
+            `How does Node Work?`,
+            `The Node.js run-time environment includes everything you need to execute a program written in JavaScript. Came from desire to execute JS not in a broswer.
+            It is a JS runtime built on Chrome’s V8 JS engine.
+            Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.
+            `,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
+            `How does NPM Work? What is the difference between a package and a module?`,
+            `NPM (Node package manager) has packages you can use in your apps to make your development faster and efficient.
+            npm can install packages in local or global mode. Use <code>-g</code> for global install. In local mode, it installs the package in a node_modules folder in your parent working directory. 
+            This location is owned by the current user. 
+            </br></br>A <strong>package</strong> is a file or directory that is described by a <code>package.json</code>. 
+            </br>A <strong>module</strong> is any file or directory that can be loaded by Node.js' <code>require()</code>.
+            </br></br>Generally, npm packages that are used in Node.js program are loaded with <code>require()</code>, making them modules. 
+            However, there's no requirement that an npm package be a module! 
+            Almost all npm packages contain many modules within them (because every file they load with <code>require()</code> is a module).
+            In the context of a Node program, the module is also the thing that was loaded from a file.
+            </br></br>NPX - npx is a tool for executing packages without installing them. It comes bundled with npm.`,
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
@@ -874,6 +999,25 @@ export default class DataService {
     
         //------Other--------//
         questions.push(new Question(id++,
+            `How do you handle errors in your code/application?`,
+            `C#:
+            </br>
+            </br>- Use try/catch/finally blocks to recover from errors or release resources
+            </br>- Handle common conditions without throwing exceptions
+            </br>- Design classes so that exceptions can be avoided
+            </br>- Throw exceptions instead of returning an error code
+            </br>- Use the predefined .NET exception types
+            </br>- End exception class names with the word Exception
+            </br>- Include three constructors in custom exception classes (no params/default, string message, string message and inner Exception)
+            </br>- Ensure that exception data is available when code executes remotely
+            </br>- Include a localized string message in every exception
+            </br>- In custom exceptions, provide additional properties as needed
+            </br>- Place throw statements so that the stack trace will be helpful
+            </br>- Use exception builder methods
+            </br>- Restore state when methods don't complete due to exceptions`,
+            Category.GENERAL
+        ));
+        questions.push(new Question(id++,
             `Source control: what are some branching strategies?`,
             `- <strong>Trunk-based Development (No Branching):</strong> Trunk-based development means all developers work on the same branch, and when changes are tested and ready, 
             a release branch is made, and release done from that branch. Release branch soon deleted after superseded by next one.</br></br>
@@ -897,7 +1041,7 @@ export default class DataService {
             Category.GENERAL
         ));
         questions.push(new Question(id++,
-            `What's the difference between MVC and MVVM? (this is frequently asked).`,
+            `What's the difference between MVC and MVVM? (this is frequently asked)?`,
             `Software Architecture patterns. </br>
             </br>Model View Controller
             </br>Model: shape of data and business logic.
@@ -934,7 +1078,33 @@ export default class DataService {
             Category.GENERAL
         ));    
         questions.push(new Question(id++,
-            `What is a dependency injection?  What are benefits?`,
+            `What is BDD?`,
+            `Behavior-driven development - an Agile software development process that emerged from TDD. 
+            BDD specifies that tests of any unit of software should be specified in terms of the desired behavior of the unit.
+            BDD specifies that business analysts and developers should collaborate in this area and should specify behavior in terms of user stories, 
+            which are each explicitly written down in a dedicated document. Each User Story should, in some way, follow the following structure:
+            </br>
+            </br><strong>Title</strong>
+            </br>&emsp;    An explicit title.
+            </br></br>
+            <strong>Narrative</strong>
+            </br>&emsp;    A short introductory section with the following structure:
+            </br>
+            </br>&emsp;-    As a: the person or role who will benefit from the feature;
+            </br>&emsp;-    I want: the feature;
+            </br>&emsp;-    so that: the benefit or value of the feature.
+            </br></br>
+            <strong>Acceptance criteria</strong>
+            </br>&emsp;    A description of each specific scenario of the narrative with the following structure:
+            </br>
+            </br>&emsp;-    Given: the initial context at the beginning of the scenario, in one or more clauses;
+            </br>&emsp;-    When: the event that triggers the scenario;
+            </br>&emsp;-    Then: the expected outcome, in one or more clauses.
+            `,
+            Category.GENERAL
+        ));    
+        questions.push(new Question(id++,
+            `What is dependency injection?  What are the benefits?`,
             `A pattern where one object supplies the dependencies of another.  Typically the dependency is passed to the constructor of the object that depends on it.
             The dependency is typically used as a service.
             </br>Benefits: makes testing easier.  Decouples construction of dependency from construction of dependent.`,
@@ -992,7 +1162,7 @@ export default class DataService {
             Category.GENERAL
         ));
         questions.push(new Question(id++,
-            `What are functional requirement vs non-functional?`,
+            `What are functional requirements vs non-functional?`,
             `Functional refers to system behavior: specific operations that the system can perform.  APIs. 
             </br>Non-functional: more abstract, e.g. Fast, fault-tolerant, secure.`,
             Category.GENERAL
@@ -1003,10 +1173,48 @@ export default class DataService {
             The reports created from complex queries within a data warehouse are used to make business decisions.`,
             Category.GENERAL
         ));
+        questions.push(new Question(id++,
+            `gRPC - what is it and how is it different from REST?`,
+            `gRPC is a popular open source Remote Procedure Call framework.  RPC Frameworks make it easier for apps to talk to each other.
+            </br>- built on HTTP/2
+            </br>- Protobuf - a serialization technology and language-neutral contract language.</br></br>
+            <strong>gRPC:</strong>
+            </br>- Contract first (proto file).  Both endpoints need to have the proto file that defines the contract.
+            </br>- Content is binary. (Serialized with Protobuf). Designed for high performance. HTTP/2.
+            </br>- Designed to hide complexity of multiple apps communicating.
+            </br>- Best for performance, developer productivity.
+            </br></br>
+            <strong>REST:</strong>
+            </br>- Content First (URL, Method, JSON), focus on readability and formatting.
+            </br>- Text-based HTTP/1.1 and JSON. (Human readable).
+            </br>- Widest audience - every computer is able to use HTTP/1.1 and JSON.
+            `,
+            Category.GENERAL
+        ));
+        questions.push(new Question(id++,
+            `What is MapReduce?`,
+            `Map-reduce is a data processing paradigm for condensing large volumes of data (multi-terabyte data-sets) into useful aggregated results 
+            in-parallel on large clusters (thousands of nodes) of commodity hardware in a reliable, fault-tolerant manner. 
+            A MapReduce program is composed of a map procedure, which performs filtering and sorting (such as sorting students by first name into queues, 
+            one queue for each name), and a reduce method, which performs a summary operation (such as counting the number of students in each queue, yielding name frequencies).
+            </br></br>
+            Origin: Hadoop MapReduce.`,
+            Category.GENERAL
+        ));
+        questions.push(new Question(id++,
+            `What is ElasticS earch and  how does it work?`,
+            `At its core, you can think of Elasticsearch as a server that can process JSON requests and give you back JSON data.
+            Elasticsearch is a distributed, open-source search and analytics engine. 
+            It allows you to store, search, and analyze huge volumes of data quickly and in near real-time and give back answers in milliseconds.
+            It stores data in documents - a document can be more than just text, it can be structured data in JSON. It uses an <strong>inverted index</strong> - 
+            it doesn’t store strings directly but instead splits each document up to individual search terms 
+            (i.e. each word) then maps each search term to the documents those search terms occur within. `,
+            Category.GENERAL
+        ));
         // questions.push(new Question(id++,
         //     ``,
         //     ``,
-        //     5
+        //     Category.GENERAL
         // ));
         
         
