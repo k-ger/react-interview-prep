@@ -570,8 +570,8 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `What is an Angular Module?  How is it different from ES Module?`,
-            `<strong>ES Modules</strong> (ngModules) organize code files, modularize code, promote code reuse.
-            </br><strong>Angular Modules</strong> organize application, modularize application, promote application boundaries.`,
+            `<strong>ES Modules</strong> organize code files, modularize code, promote code reuse.
+            </br><strong>Angular Modules</strong> (ngModules) organize application, modularize application, promote application boundaries.`,
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
