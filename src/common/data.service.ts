@@ -305,6 +305,12 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
+            `What are Covariance and Contravariance?`,
+            `<strong>Covariance:</strong> enables you to pass a derived type where a base type is expected.</br></br>
+            <strong>Contravariance:</strong> is applied to parameters. Cotravariance allows a method with the parameter of a base class to be assigned to a delegate that expects the parameter of a derived class.`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
             `What's the difference between IEnumerable and IQueryable?`,
             `IQueryable extends IEnumerable.  Both IEnumerable and IQueryable can only move forward over a collection, can’t move backward or between the items.  
             </br>- IEnumerable Doesn’t support lazy loading, IQueryable does.
@@ -1178,13 +1184,13 @@ export default class DataService {
             `gRPC is a popular open source Remote Procedure Call framework.  RPC Frameworks make it easier for apps to talk to each other.
             </br>- built on HTTP/2
             </br>- Protobuf - a serialization technology and language-neutral contract language.</br></br>
-            <strong>gRPC:</strong>
+            gRPC:
             </br>- Contract first (proto file).  Both endpoints need to have the proto file that defines the contract.
             </br>- Content is binary. (Serialized with Protobuf). Designed for high performance. HTTP/2.
             </br>- Designed to hide complexity of multiple apps communicating.
             </br>- Best for performance, developer productivity.
             </br></br>
-            <strong>REST:</strong>
+            REST:
             </br>- Content First (URL, Method, JSON), focus on readability and formatting.
             </br>- Text-based HTTP/1.1 and JSON. (Human readable).
             </br>- Widest audience - every computer is able to use HTTP/1.1 and JSON.
@@ -1202,7 +1208,7 @@ export default class DataService {
             Category.GENERAL
         ));
         questions.push(new Question(id++,
-            `What is ElasticS earch and  how does it work?`,
+            `What is Elastic Search and  how does it work?`,
             `At its core, you can think of Elasticsearch as a server that can process JSON requests and give you back JSON data.
             Elasticsearch is a distributed, open-source search and analytics engine. 
             It allows you to store, search, and analyze huge volumes of data quickly and in near real-time and give back answers in milliseconds.

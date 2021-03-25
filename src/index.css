@@ -16,6 +16,7 @@ body {
   @apply bg-gray-100;
   overflow: overlay;
   height: 100%;
+  background: #ebebeb;
 }
 
 code {
@@ -47,3 +48,7 @@ code {
 }
 
 /* end toggle region */
+
+.expandables-container > :last-child{
+  box-shadow: none;
+}

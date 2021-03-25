@@ -44,29 +44,29 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
     render() {
         return (
             <div className="bg-white shadow overflow-hidden rounded-md sm:rounded-lg">
-                <div className="flex sm:block justify-center px-4 sm:px-6">
+                <div className="bg-indigo-900 flex sm:block justify-center px-4 sm:px-6">
                     <div className="sm:ml-10 space-x-12 sm:space-x-12 flex">
-                        <a href="#" className={this._getTabClassName(TopicTab.QUESTIONS)} onClick={() => { this._selectTab(TopicTab.QUESTIONS) }}>
+                        <button type="button" className={this._getTabClassName(TopicTab.QUESTIONS)} onClick={() => { this._selectTab(TopicTab.QUESTIONS) }}>
                             <Icon iconType={IconType.Badge} className={this._getTabIconClassName(TopicTab.QUESTIONS)}></Icon>
                             Questions
-                        </a>
-                        <a href="#" className={this._getTabClassName(TopicTab.LINKS)} onClick={() => { this._selectTab(TopicTab.LINKS) }}>
+                        </button>
+                        <button type="button" className={this._getTabClassName(TopicTab.LINKS)} onClick={() => { this._selectTab(TopicTab.LINKS) }}>
                             <Icon iconType={IconType.Link} className={this._getTabIconClassName(TopicTab.LINKS)}></Icon>
                             Links
-                        </a>
-                        <a href="#" className={this._getTabClassName(TopicTab.SANDBOX)} onClick={() => { this._selectTab(TopicTab.SANDBOX) }}>
+                        </button>
+                        <button type="button" className={this._getTabClassName(TopicTab.SANDBOX)} onClick={() => { this._selectTab(TopicTab.SANDBOX) }}>
                             <Icon iconType={IconType.Code} className={this._getTabIconClassName(TopicTab.SANDBOX)}></Icon>
                             Sandbox
-                        </a>
+                        </button>
                     </div>
                 </div>
-                <div className="border-t border-gray-200">
+                <div className="">
                     {this.state.activeTab === TopicTab.QUESTIONS ?
                         <div className="mx-4 py-1">
                             <Toggle offText={'Show All'} onText={'Hide All'} change={this.toggleAll}></Toggle>
                         </div>
                         : ''}
-                    <dl>
+                    <dl className="expandables-container">
                         {this.state.activeTab === TopicTab.QUESTIONS ? this._getQuestions() : ''}
                         {this.state.activeTab === TopicTab.LINKS ? this._getLinks() : ''}
                         {this.state.activeTab === TopicTab.SANDBOX ? this._getSandbox() : ''}
@@ -109,8 +109,9 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
                                 <div className="shadow-inner p-2 pl-4 mt-1 ml-4 text-sm text-indigo-900 bg-gray-100 border-l-4 border-indigo-600 overflow-x-hidden" dangerouslySetInnerHTML={{ __html: q.a() }}>
                                 </div>
                             </FadeInContainer>
-                            : ''}
-                        </div>
+                            : 
+                        ''}
+                    </div>
                 )
             });
 
@@ -125,16 +126,18 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
         if (this.state.links && this.state.links.length) {
             return this.state.links.map((l) => {
                 return (
-                    <FadeInContainer>
-                        <div key={l.id()} className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 m-2 shadow">
-                            <div className="text-sm font-medium text-gray-600 pb-1">
-                                {l.name()}
+                    <div key={l.id()} className="shadow">
+                        <FadeInContainer>
+                            <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 m-2">
+                                <div className="text-sm font-medium text-gray-600 pb-1">
+                                    {l.name()}
+                                </div>
+                                <div className="shadow-inner p-2 pl-4 mt-1 ml-4 sm:ml-0 text-sm text-indigo-900 cursor-pointer hover:bg-gray-100 sm:mt-0 sm:col-span-2 bg-gray-100 border-l-4 border-indigo-600 overflow-x-hidden">
+                                    <a className="hover:underline" href={l.url()}>{l.url()}</a>
+                                </div>
                             </div>
-                            <div className="shadow-inner p-2 pl-4 mt-1 ml-4 sm:ml-0 text-sm text-indigo-900 cursor-pointer hover:bg-gray-100 sm:mt-0 sm:col-span-2 bg-gray-100 border-l-4 border-indigo-600 overflow-x-hidden">
-                                <a className="hover:underline" href={l.url()}>{l.url()}</a>
-                            </div>
-                        </div>
-                    </FadeInContainer>
+                        </FadeInContainer>
+                    </div>
                 )
             });
         } else {
@@ -149,16 +152,18 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
         if (this.state.sandboxes && this.state.sandboxes.length) {
             return this.state.sandboxes.map((s) => {
                 return (
-                    <FadeInContainer>
-                        <div key={s.id()} className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 m-2 shadow">
-                            <div className="text-sm font-medium text-gray-600 pb-1">
-                                {s.name()}
+                    <div key={s.id()} className="shadow">
+                        <FadeInContainer>
+                            <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 m-2">
+                                <div className="text-sm font-medium text-gray-600 pb-1">
+                                    {s.name()}
+                                </div>
+                                <div className="shadow-inner p-2 pl-4 mt-1 ml-4 sm:ml-0 text-sm text-indigo-900 cursor-pointer hover:bg-gray-100 sm:mt-0 sm:col-span-2 bg-gray-100 border-l-4 border-indigo-600 overflow-x-hidden">
+                                    <a className="hover:underline" href={s.url()}>{s.url()}</a>
+                                </div>
                             </div>
-                            <div className="shadow-inner p-2 pl-4 mt-1 ml-4 sm:ml-0 text-sm text-indigo-900 cursor-pointer hover:bg-gray-100 sm:mt-0 sm:col-span-2 bg-gray-100 border-l-4 border-indigo-600 overflow-x-hidden">
-                                <a className="hover:underline" href={s.url()}>{s.url()}</a>
-                            </div>
-                        </div>
-                    </FadeInContainer>
+                        </FadeInContainer>
+                    </div>
                 )
             });
         } else {
@@ -169,8 +174,8 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
     }
 
     private _getTabClassName = (tab: TopicTab): string => {
-        let classNameSelected = `flex flex-col sm:flex-row items-center font-medium text-indigo-600 hover:text-indigo-500 py-2 sm:py-3 border-b-2 border-indigo-600`;
-        let className = `flex flex-col sm:flex-row items-center font-medium text-gray-500 hover:text-gray-900 py-2 sm:py-3`;
+        let classNameSelected = `flex flex-col sm:flex-row items-center font-medium text-gray-300 py-2 sm:py-3 border-b-2 border-gray-200 focus:outline-none`;
+        let className = `flex flex-col sm:flex-row items-center font-medium text-gray-500 hover:text-gray-400 py-2 sm:py-3 border-b-2 border-transparent focus:outline-none`;
 
         return (tab === this.state.activeTab) ? classNameSelected : className;
     }
