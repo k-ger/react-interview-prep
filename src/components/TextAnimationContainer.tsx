@@ -13,7 +13,7 @@ function TextAnimationContainer(props: TextAnimationProps) {
                 enter: { opacity: 1 },
                 leave: { display: 'none' }
             }).map(({ item, key, props }) => (
-                <animated.div style={props}>{item}</animated.div>
+                <animated.div key={key} style={props}>{item}</animated.div>
             ))}
         </div>
     )
