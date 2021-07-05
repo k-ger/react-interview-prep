@@ -33,11 +33,11 @@ class Home extends Component<IHomeProps, IHomeState> {
                                 </h1>
                             </div>
                             <div className="flex space-x-4 flex-wrap items-center justify-center sm:items-stretch sm:justify-start">
-                                <a href="#" className={this._getTabClassName(Category.DOTNET)} onClick={() => { this._selectTab(Category.DOTNET) }}>{CategoryName.get(Category.DOTNET)}</a>
-                                <a href="#" className={this._getTabClassName(Category.ANGULAR)} onClick={() => { this._selectTab(Category.ANGULAR) }}>{CategoryName.get(Category.ANGULAR)}</a>
-                                <a href="#" className={this._getTabClassName(Category.JSWEBDOM)} onClick={() => { this._selectTab(Category.JSWEBDOM) }}>{CategoryName.get(Category.JSWEBDOM)}</a>
-                                <a href="#" className={this._getTabClassName(Category.SQL)} onClick={() => { this._selectTab(Category.SQL) }}>{CategoryName.get(Category.SQL)}</a>
-                                <a href="#" className={this._getTabClassName(Category.GENERAL)} onClick={() => { this._selectTab(Category.GENERAL) }}>{CategoryName.get(Category.GENERAL)}</a>
+                                <button type="button" className={this._getTabClassName(Category.DOTNET)} onClick={() => { this._selectTab(Category.DOTNET) }}>{CategoryName.get(Category.DOTNET)}</button>
+                                <button type="button" className={this._getTabClassName(Category.ANGULAR)} onClick={() => { this._selectTab(Category.ANGULAR) }}>{CategoryName.get(Category.ANGULAR)}</button>
+                                <button type="button" className={this._getTabClassName(Category.JSWEBDOM)} onClick={() => { this._selectTab(Category.JSWEBDOM) }}>{CategoryName.get(Category.JSWEBDOM)}</button>
+                                <button type="button" className={this._getTabClassName(Category.SQL)} onClick={() => { this._selectTab(Category.SQL) }}>{CategoryName.get(Category.SQL)}</button>
+                                <button type="button" className={this._getTabClassName(Category.GENERAL)} onClick={() => { this._selectTab(Category.GENERAL) }}>{CategoryName.get(Category.GENERAL)}</button>
                             </div>
                         </div>
 
@@ -68,15 +68,14 @@ class Home extends Component<IHomeProps, IHomeState> {
     }
 
     private _getTabClassName = (tab: Category): string => {
-        let classNameSelected = `bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap`;
-        let className = `text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap`;
+        let classNameSelected = `bg-gray-600 text-white px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap focus:outline-none`;
+        let className = `text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap focus:outline-none`;
 
         return (tab === this.state.categoryId) ? classNameSelected : className;
     }
 
     private _getCategoryDescription = (categoryId: number) => {
         return (
-            
             <TextAnimationContainer text={CategoryDescription.get(categoryId)}></TextAnimationContainer>
         );
     }
