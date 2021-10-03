@@ -224,6 +224,22 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
+            `How do you compare objects in C#?`,
+            `There are 2 types of equality: <strong>value equality</strong> (equivalence) and <strong>reference equality</strong> (identity).
+            </br></br><strong>Reference equality</strong> means that two object references refer to the same underlying object.  This applies only to reference types.
+            Use <code>Object.ReferenceEquals(ob1, ob2)</code> to compare ref types.
+            </br></br><strong>Value equality</strong> means that two objects contain the same value or values.  For primitives, use <code>==</code>.
+            Can use ob1.Equals(ob2).  For ref types, need to implement following steps:
+            </br></br>1. Override the virtual <code>Equals()</code> method.
+            </br>2. Implement the <code>IEquatable</code> interface by providing a type-specific Equals method. This is where the actual equivalence comparison is performed.
+            </br>3. Optional but recommended: Overload the <code>==</code> and <code>!=</code> operators.
+            </br>4. Override <code>Object.GetHashCode</code> so that two objects that have value equality produce the same hash code.
+            </br>5. Optional: To support definitions for "greater than" or "less than," implement the <code>IComparable</code> interface for your type, 
+            and also overload the <code><=</code> and <code>>=</code> operators.
+            `,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
             `Write a singleton without using a lock.`,
             `<code>sealed class Singleton</br>
             {</br>
@@ -255,24 +271,14 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
-            `When a struct is inside a class, where is memory allocated for it (stack or heap?)`,
-            `Heap`,
+            `How do you force GC and when is it a good idea to do so?`,
+            `Force GC like this: <code>System.GC.Collect</code>.  Do this right after de-referencing a large number of objects.  
+            Also, when testing: calling GC will show you if memory leaks exist - if objects you intended to have collected remain.`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
-            `How do you compare objects in C#?`,
-            `There are 2 types of equality: <strong>value equality</strong> (equivalence) and <strong>reference equality</strong> (identity).
-            </br></br><strong>Reference equality</strong> means that two object references refer to the same underlying object.  This applies only to reference types.
-            Use <code>Object.ReferenceEquals(ob1, ob2)</code> to compare ref types.
-            </br></br><strong>Value equality</strong> means that two objects contain the same value or values.  For primitives, use <code>==</code>.
-            Can use ob1.Equals(ob2).  For ref types, need to implement following steps:
-            </br></br>1. Override the virtual <code>Equals()</code> method.
-            </br>2. Implement the <code>IEquatable</code> interface by providing a type-specific Equals method. This is where the actual equivalence comparison is performed.
-            </br>3. Optional but recommended: Overload the <code>==</code> and <code>!=</code> operators.
-            </br>4. Override <code>Object.GetHashCode</code> so that two objects that have value equality produce the same hash code.
-            </br>5. Optional: To support definitions for "greater than" or "less than," implement the <code>IComparable</code> interface for your type, 
-            and also overload the <code><=</code> and <code>>=</code> operators.
-            `,
+            `When a struct is inside a class, where is memory allocated for it (stack or heap?)`,
+            `Heap`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -321,10 +327,22 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `What is Yield in C#?`,
-            `	Yield return is .NET syntax sugar to return an IEnumerable. Allows the creation of items as it is demanded.
+            `<code>Yield return</code> is .NET syntax sugar to return an IEnumerable. Allows the creation of items as it is demanded.
             Iteration. It creates a state machine "under the covers" that remembers where you were on each additional cycle of the function and picks up from there.
-            It helps to provide custom iteration without creating temp collections.
-            It helps to do stateful iteration. `,
+            It helps to provide custom iteration without creating temp collections. It helps to do stateful iteration.  
+            The first advantage of doing this vs returning an entire set is when your application is working on multiple gigabytes or even terrabytes of data, 
+            and the second is when you have chained together multiple queries that result in different manipulations of the dataset.
+            <br><br>In short: the yield statement creates a state machine for an enumerator.`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
+            `How is dependency injection typically done in .NET Core?`,
+            `ASP.NET Core provides a built-in service container, <strong>IServiceProvider</strong>. Services are registered in the app's <strong>Startup.ConfigureServices</strong> method.
+            Services are typically resolved from DI using constructor injection. With constructor injection, a class declares a constructor parameter of either the required type or an interface. 
+            The DI framework provides an instance of this service at runtime. You can register services as Transient, Scoped, or Singleton:
+            <br>- Transient objects are always different; a new instance is provided to every controller and every service.
+            <br>- Scoped objects are the same within a request, but different across different requests.    
+            <br>- Singleton objects are the same for every object and every request.`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -337,6 +355,12 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
+            `What does the <b>using</b> statement do?`,
+            `Using statement, when used with parentheses, compiles to a try/finally block.  Inside finally, .Dispose() is called on the object in parentheses.
+            This object must implement IDisposable.  This way, you can have the object disposed at the earliest available time after execution leaves the 'using' block.`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
             `How to handle multi-threaded exceptions?`,
             `With tasks: 
             </br>- If await used, can use Try Catch Finally, as usual.  If not, AggregateException? Use handle() and flatten().  
@@ -345,11 +369,32 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
+            `What Thread Synchronization constructs do you know?`,
+            `- Lock (Monitor class)
+            <br>- Mutex: mutually exclusive sync object that can be acquired by 1 and only 1 thread at a time.
+            <br>- Semaphore: similar to mutex but it can grant more than 1 thread access to a shared resource at a time. (Gate with # of permits).
+            <br>- MethodImplAttribute: used on an entire method. Must not be used on a public object or with a public class.`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
             `What's the difference between const and readonly?`,
             `A const field can only be initialized at the declaration of the field. A readonly field can be initialized either at the declaration or in a constructor. 
             Therefore, readonly fields can have different values depending on the constructor used. 
+            Readonly can be declared but not initialized, then initialized (i.e. in constructor).  Const must be initialized where declared.
             Also, although a const field is a compile-time constant, the readonly field can be used for run-time constants, as in this line: <code>public static readonly uint l1 = (uint)DateTime.Now.Ticks;</code>
-            </br>Const cannot be static, but readonly can.`,
+            <br>Const cannot be static, but readonly can.
+            <br><br>
+            Const can be: 
+            <br>- Number
+            <br>- String
+            <br>- Bool
+            <br>- Null reference
+            <br><br>
+            Readonly can be:
+            <br>- Field declaration
+            <br>- Readonly struct declaration
+            <br>- Readonly member definition
+            <br>- Ref read only method return`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -370,7 +415,16 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `Can you lock on a value type?`,
-            `No - because it's a stack variable and doesn't have a sync root record.`,
+            `No - because it's a stack variable and doesn't have a sync root record.  Lock is syntax sugar for Monitor.Enter, Exit, and they accept an object. 
+            If you try to pass a value type, it will need to be boxed, and that creates a new object each time.`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
+            `What are some guidelines for locking?`,
+            `Avoid locking on anything publicly accessible - use private or just <code>object myLocker = new object();</code>.  Lock on a reference type.  
+            Check (re-check) state at the beginning of the lock block because you don't know how long it takes between encountering lock statement and acquiring the lock.
+            The variable should live in the same scope as the methods where you use it for locking. 
+            If the methods are static, the variable should be static, and if the methods are instance methods, the variable should be an instance varible.`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -381,12 +435,31 @@ export default class DataService {
             Category.DOTNET
         ));
         questions.push(new Question(id++,
+            `What members can an Interface have?`,
+            `- Properties
+            <br>- Methods
+            <br>- Events
+            <br>- Indexers`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
             `What's the difference between a Process and a Thread?`,
             `Threads run in shared memory space, Processes run in separate mem space.</br></br>
             Each Process is started with a single thread (main/primary thread) but can create additional threads from any of its threads.  
             Has its own virtual address space (managed heap).</br></br>
             A thread is a "subset of a process" or a "path of execution through a process".  
             All threads of a process share its virual address space and system resources, but each thread has own stack.`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
+            `What are constraints and how are they used?`,
+            `Your generic code needs some way to know what public methods and properties your T object has.  Constraints support this, using <code>where</code> clause:
+            <br><code>class MyGenericClass&lt;<t>T&gt; where T : <i>constraint</i> {...</t></code>
+            <br><br><strong>Base Class Constriant</strong> - Specify a base class that the type argument must inherit.
+            <br><br><strong>Interface Constriant</strong> - Require that one or more interfaces be implemented by a type argument.  More than 1 Interface can be stated using a comma-separated list.
+            <br><br><strong>Constructor (New) Constriant</strong> - Require that the type argument supply a parameterless constructor.  Specified by: <strong>new()</strong>.
+            <br><br><strong>Reference Type Constriant</strong> - Require that the type argument be a reference type. Specified by: <strong>class</strong>.
+            <br><br><strong>Value Type Constriant</strong> - Require that the type argument be a value type. Specified by: <strong>struct</strong>.`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -567,6 +640,19 @@ export default class DataService {
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
+            `How do you lazy load Angular Modules?`,
+            `To lazy load Angular modules, use <strong><code>loadchildren</code></strong> (instead of component) in your AppRoutingModule routes configuration as follows:
+            <br><br>
+            <code>
+            const routes: Routes = [
+            <br>     {
+            <br>      path: 'items',
+            <br>      loadChildren: () =&gt; import('./items/items.module').then(m =&gt; m.ItemsModule)
+            <br>     }
+            <br>];`,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
             `How do you handle errors in Angular?`,
             `Handle global errors with <code>ErrorHandler</code>.  Create an Injectable (service) class that implements <code>ErrorHandler</code>
             and handles the 2 kinds of errors: Client (JS) and Server (HTTPResponse).  To add it, add the following to RootModule: <code>providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}]</code>.
@@ -596,6 +682,28 @@ export default class DataService {
             `How can you make a service not a singleton?`,
             `When you add a service to the providers array of an @NgModule, that service will be a singleton.  When you add it to the providers array of a @Component, it will not be a singleton.
             Non-singleton services can use the ngOnDestroy() hook.`,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `How does change detection work in Angular?`,
+            `At startup, Angular patches (overrides) several low-level browser APIs to be able to detect changes in the application.  It adds event listeners to them, and performs change detection on these events.
+            This is done using Zone.js. A zone is an execution context.  By default, Angular Change Detection works by checking if the value of the template expressions have changed.
+            By default, it does not do deep object comparison to detect changes, it only takes into account properties used by the template.`,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `What triggers change detection in Angular?`,
+            `1. Any browser event: click, keyup, etc...
+            <br>2. setInterval(), setTimeout()
+            <br>3. HTTP Request vie XMLHttpRequest</div>`,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `How does routing work in Angular?`,
+            `1. RouterLink and Router Outlet.  A link or button defines a <code>[routerLink]</code>. RouterLink has a url route assigned to it in this button/link. 
+            The component defined as the target for the route in app.routing.ts (or the routing.module.ts file of a lazy-loaded component).  The component is loaded inside of the <code>router-outlet</code> directive.
+            There can only be one <code>router-outlet</code>.
+            <br>2. Router.navigate.  The built-in Router class (ex RouterService) has a method called navigate which accepts an array of url route params.`,
             Category.ANGULAR
         ));
         // questions.push(new Question(id++,
@@ -641,6 +749,16 @@ export default class DataService {
             </br>The developer of an app does not need to store (or manage) user logins/pwds.
             </br>- MFA: Multi-factor
             </br>- JWT: JSON Web Token`,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
+            `What are the principles of REST?`,
+            `1. <strong>Client–server</strong> – By separating the user interface concerns from the data storage concerns, we improve the portability of the user interface across multiple platforms and improve scalability by simplifying the server components.
+            <br><br>2. <strong>Stateless</strong> – Each request from client to server must contain all of the information necessary to understand the request, and cannot take advantage of any stored context on the server. Session state is therefore kept entirely on the client.
+            <br><br>3. <strong>Cacheable</strong> – Cache constraints require that the data within a response to a request be implicitly or explicitly labeled as cacheable or non-cacheable. If a response is cacheable, then a client cache is given the right to reuse that response data for later, equivalent requests.
+            <br><br>4. <strong>Uniform interface</strong> – By applying the software engineering principle of generality to the component interface, the overall system architecture is simplified and the visibility of interactions is improved. In order to obtain a uniform interface, multiple architectural constraints are needed to guide the behavior of components. REST is defined by four interface constraints: identification of resources; manipulation of resources through representations; self-descriptive messages; and, hypermedia as the engine of application state.
+            <br><br>5. <strong>Layered system</strong> – The layered system style allows an architecture to be composed of hierarchical layers by constraining component behavior such that each component cannot “see” beyond the immediate layer with which they are interacting.
+            <br><br>6. <strong>Code on demand</strong> (optional) – REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This simplifies clients by reducing the number of features required to be pre-implemented.`,
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
@@ -692,6 +810,14 @@ export default class DataService {
             </br></br>
             Server will respond with the following header indicating which clients can send it requests. <code>Access-Control-Allow-Origin:</code> 
             </br> The client's domain must be included in the list.  If not, the browser will error on the server's response.`,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
+            `What's the difference between CSS and SCSS?`,
+            `CSS is the styling language that any browser understands to style webpages.
+            <br>SCSS is a special type of file for SASS, a program written in Ruby that assembles CSS style sheets for a browser.  
+            SASS adds lots of additional functionality to CSS like variables, nesting (indentation), import mixins, and more which can make writing CSS easier and faster.
+            <br>SCSS files are processed by the server running a web app to output traditional CSS that your browser can understand.`,
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
@@ -767,6 +893,21 @@ export default class DataService {
             `What is a blob?`,
             `The Blob object represents a blob, which is a file-like object of immutable, raw data; 
             they can be read as text or binary data, or converted into a ReadableStream so its methods can be used for processing the data.`,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
+            `What is event bubbling?`,
+            `<strong>Event Flow</strong> - Event flow is the order in which event is received on the web page. If you click on an element like on div or on the button, which is nested to other elements,
+            before the click is performed on the target element, it must trigger the click event each of its parent elements first, starting at the top with the global window object. 
+            By default, every element of HTML is child of the window object.
+           
+           <br><br><strong>Event Bubbling</strong> - When an event is raised on an element, it bubbles up to the next element (parent), and if there is an event listener registered, the callback will be fired,
+           and this process will continue all the way up.  Use <code>stopPropagation()</code> to stop event from bubbling.`,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
+            `What's the difference between currentTarget property and target property in JS?`,
+            `<strong>Target</strong> is the element that triggered the event (e.g., the user clicked on), <strong>currentTarget</strong> is the element that the event listener is attached to.`,
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
@@ -909,6 +1050,37 @@ export default class DataService {
             Category.SQL
         ));
         questions.push(new Question(id++,
+            `What's the difference between a View and a Table?`,
+            `Tables contain data, a View is a "virtual" table - stored in schema, but no data stored.  Views abstract data, can support security by not returning all cols of all tables.
+            Views reduce complexity: can define complex query as view, then reuse the view.  Can index views, but you will need to update these indexes 
+            every time you modify the underlying tables.  Cannot <code>ORDER BY</code> in views.`,
+            Category.SQL
+        ));
+        questions.push(new Question(id++,
+            `What's the difference between a View and a Stored Proc? When to use which?`,
+            `A <strong>Stored Procedure</strong>:
+            <br>    
+            <br>- Accepts parameters
+            <br>- Can NOT be used as building block in a larger query
+            <br>- Can contain several statements, loops, IF ELSE, etc.
+            <br>- Can perform modifications to one or several tables
+            <br>- Can NOT be used as the target of an INSERT, UPDATE or DELETE statement.
+            <br><br>A <strong>View</strong>:
+            <br>
+            <br>- Does NOT accept parameters
+            <br>- Can be used as building block in a larger query
+            <br>- Can contain only one single SELECT query
+            <br>- Can NOT perform modifications to any table
+            <br>- But can (sometimes) be used as the target of an INSERT, UPDATE or DELETE statement.`,
+            Category.SQL
+        ));
+        questions.push(new Question(id++,
+            `Benefits of SPs over queries?`,
+            `SPs don't necessarily increase performance over regular queries, since both types are cached and pre-compiled.  
+            SPs can have security set on them.  Queries (in middle tier or elsewhere) expose schema - another securtiy risk.  SPs also reduce network traffic.`,
+            Category.SQL
+        ));
+        questions.push(new Question(id++,
             `Difference between a temp table and a table variable?`,
             `- Temp tables can be modified (ALTER CREATE DELETE), table variables cannot.  Table variables cannot be dropped explicitly, only automatically.
             </br>- Temp tables not allowed to be defined in UDFs, table variables allowed.
@@ -951,6 +1123,12 @@ export default class DataService {
             Category.SQL
         ));
         questions.push(new Question(id++,
+            `Does the order of columns in a composite index matter?`,
+            `Yes. The most selective should be first, followed by progressively less selective cols.  If 1st col isn't included in WHERE or JOIN ON clause,
+            then even if any of the other cols are included, the index will not be leveraged.`,
+            Category.SQL
+        ));
+        questions.push(new Question(id++,
             `What are Statistics, and how are they useful?`,
             `SQL Server statistics are essential for the query optimizer to prepare an optimized and cost-effective execution plan. 
             These statistics provide distribution of column values to the query optimizer, and it helps SQL Server to estimate the number of rows (also known as cardinality). 
@@ -973,6 +1151,17 @@ export default class DataService {
             `- When composite index and WHERE clause doesn't contain the first col of the index.</br>
             - When index on VARCHAR and col is compared to a string starting with '% or '_'. 
             </br>Ex: <code>WHERE val LIKE '%asdf%'</code>`,
+            Category.SQL
+        ));
+        questions.push(new Question(id++,
+            `What is parameter sniffing?`,
+            `SQL Server uses a process called parameter sniffing when it executes stored procedures that have parameters. 
+            When the procedure is compiled or recompiled, the value passed into the parameter is evaluated and used to create an execution plan. 
+            That value is then stored with the execution plan in the plan cache. On subsequent executions, that same value – and same plan – is used.
+            Performance issues can occur when the set of parameters that the execution plan was optimized for ends up being drastically different than the parameters that are being passed in right now.
+            <br><br>
+            To overcome parameter sniffing performance issue that could occur due to forcing the same plan usage for all stored procedures parameters values we can use the WITH RECOMPLIE option in the stored procedure definition, 
+            which will force the stored procedure compilation at each execution, creating a new execution plan for each parameter value.`,
             Category.SQL
         ));
         questions.push(new Question(id++,
@@ -1004,6 +1193,20 @@ export default class DataService {
         // ));
     
         //------Other--------//
+        questions.push(new Question(id++,
+            `What are the 4 pillars of OOP?`,
+            `- <strong>Encapsulation:</strong> bind together code and the data it manipulates. Keep both safe from outside interference/misuse.
+            Data linked together with code = black box (object).  Basic unit of encapsulation: Class.
+            <br><br>
+            - <strong>Polymorphism:</strong> one interface, many methods.  Allows one interface to access a general class of actions. 
+            Reduces complexity by allowing compiler to decide the specific method as it applies to each situation.
+            <br><br>
+            - <strong>Inheritance:</strong> one object acquires the properties of another.  Supports hierarchical classification.
+            Allows one object to be a more specific instance of a more general case.
+            <br><br>
+            - <strong>Abstraction:</strong> show only essential/necessary features of an entity/object to the outside world and hide the other irrelevant information.`,
+            Category.GENERAL
+        ));
         questions.push(new Question(id++,
             `How do you handle errors in your code/application?`,
             `C#:
@@ -1215,6 +1418,28 @@ export default class DataService {
             It stores data in documents - a document can be more than just text, it can be structured data in JSON. It uses an <strong>inverted index</strong> - 
             it doesn’t store strings directly but instead splits each document up to individual search terms 
             (i.e. each word) then maps each search term to the documents those search terms occur within. `,
+            Category.GENERAL
+        ));
+        questions.push(new Question(id++,
+            `What is Big O notation?`,
+            `Big O notation is used to describe the performance or complexity of an algorithm. Big O specifically describes the worst-case scenario, 
+            and can be used to describe the execution time required or the space used (e.g. in memory or on disk) by an algorithm.`,
+            Category.GENERAL
+        ));
+        questions.push(new Question(id++,
+            `How to swap 2 vairables without using a 3rd temp var?`,
+            `1. Algebraic approach: x = x + y; y = x - y; x = x - y; <br><br>
+            2. XOR Approach: x = x ^ y; y = x ^ y; x = x ^ y; `,
+            Category.GENERAL
+        ));
+        questions.push(new Question(id++,
+            `TCP vs UDP?`,
+            `TCP is a connection-oriented protocol, whereas UDP is a connectionless protocol.
+            <br>The speed for TCP is slower while the speed of UDP is faster
+            <br>TCP uses handshake protocol like SYN, SYN-ACK, ACK while UDP uses no handshake protocols
+            <br>TCP does error checking and also makes error recovery, on the other hand, UDP performs error checking, but it discards erroneous packets.
+            <br>TCP has acknowledgment segments, but UDP does not have any acknowledgment segment.
+            <br>TCP is heavy-weight, and UDP is lightweight.`,
             Category.GENERAL
         ));
         // questions.push(new Question(id++,
