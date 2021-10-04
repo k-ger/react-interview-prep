@@ -738,7 +738,7 @@ export default class DataService {
             `How do you authenticate users? (What are the different types of authentication?)`,
             `Authentication = determining identity.  
             </br>Types:
-            </br>- Basic authentication: challenge/response format. Server will request a secure resource from server, server will challenge client to authenticate,
+            </br>- Basic authentication: challenge/response format. Client will request a secure resource from server, server will challenge client to authenticate,
             and client will request back with credentials to auth. 
             </br>- Digest authentication: Same as above, but server challenges by responding with a <strong>nonce</strong>. This is an arbitrary number that can only be used once.  
             Client sends a digest of the password - computed using hashing algo with a nonce that the server provides.
