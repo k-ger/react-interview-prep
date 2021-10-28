@@ -38,6 +38,7 @@ class Home extends Component<IHomeProps, IHomeState> {
                                 <button type="button" className={this._getTabClassName(Category.JSWEBDOM)} onClick={() => { this._selectTab(Category.JSWEBDOM) }}>{CategoryName.get(Category.JSWEBDOM)}</button>
                                 <button type="button" className={this._getTabClassName(Category.SQL)} onClick={() => { this._selectTab(Category.SQL) }}>{CategoryName.get(Category.SQL)}</button>
                                 <button type="button" className={this._getTabClassName(Category.GENERAL)} onClick={() => { this._selectTab(Category.GENERAL) }}>{CategoryName.get(Category.GENERAL)}</button>
+                                <button type="button" className={this._getTabClassName(Category.RANDOM)} onClick={() => { this._selectTab(Category.RANDOM) }}>{CategoryName.get(Category.RANDOM)}</button>
                             </div>
                         </div>
 

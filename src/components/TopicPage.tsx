@@ -1,6 +1,6 @@
 import { Component } from "react";
 import DataService from "../common/data.service";
-import { Category, Link, Question } from "../common/models";
+import { Category, CategoryName, Link, Question } from "../common/models";
 import Toggle from "./Toggle";
 import Icon, { IconType } from "../icons/Icon";
 import FadeInContainer from "./FadeInContainer";
@@ -12,6 +12,8 @@ interface ITopicPageState {
     questions: Question[];
     links: Link[];
     sandboxes: Link[];
+    randomQuestions: Question[];
+    randomQuestionIdx: number;
     showAll: boolean;
     activeTab: TopicTab
 }
@@ -19,7 +21,8 @@ interface ITopicPageState {
 enum TopicTab {
     QUESTIONS = 1,
     LINKS = 2,
-    SANDBOX = 3
+    SANDBOX = 3,
+    RANDOM_TOGGLE = 4
 }
 
 class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
@@ -36,6 +39,8 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
             questions: [],
             links: [],
             sandboxes: [],
+            randomQuestions: [],
+            randomQuestionIdx: 0,
             showAll: false,
             activeTab: TopicTab.QUESTIONS
         }
@@ -46,26 +51,48 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
             <div className="bg-white shadow overflow-hidden rounded-md sm:rounded-lg">
                 <div className="bg-indigo-900 flex sm:block justify-center px-4 sm:px-6">
                     <div className="sm:ml-10 space-x-12 sm:space-x-12 flex">
-                        <button type="button" className={this._getTabClassName(TopicTab.QUESTIONS)} onClick={() => { this._selectTab(TopicTab.QUESTIONS) }}>
-                            <Icon iconType={IconType.Badge} className={this._getTabIconClassName(TopicTab.QUESTIONS)}></Icon>
-                            Questions
-                        </button>
-                        <button type="button" className={this._getTabClassName(TopicTab.LINKS)} onClick={() => { this._selectTab(TopicTab.LINKS) }}>
-                            <Icon iconType={IconType.Link} className={this._getTabIconClassName(TopicTab.LINKS)}></Icon>
-                            Links
-                        </button>
-                        <button type="button" className={this._getTabClassName(TopicTab.SANDBOX)} onClick={() => { this._selectTab(TopicTab.SANDBOX) }}>
-                            <Icon iconType={IconType.Code} className={this._getTabIconClassName(TopicTab.SANDBOX)}></Icon>
-                            Sandbox
-                        </button>
+
+                        {   this.props.categoryId === Category.RANDOM ?  
+                            <>
+                                <div className="flex-auto"></div>
+                                <button type="button" className={this._getTabClassName(TopicTab.RANDOM_TOGGLE)} onClick={() => { this._nextRandom(-1) }}>
+                                    <Icon iconType={IconType.Left} className={this._getTabIconClassName(TopicTab.RANDOM_TOGGLE)}></Icon>
+                                </button>
+                                <div className="flex-auto"></div>
+                                <button type="button" className={this._getTabClassName(TopicTab.RANDOM_TOGGLE)} onClick={() => { this._nextRandom(1) }}>
+                                    <Icon iconType={IconType.Right} className={this._getTabIconClassName(TopicTab.RANDOM_TOGGLE)}></Icon>
+                                </button>
+                                <div className="flex-auto"></div>
+                            </>
+                            :
+                            <>
+                                <button type="button" className={this._getTabClassName(TopicTab.QUESTIONS)} onClick={() => { this._selectTab(TopicTab.QUESTIONS) }}>
+                                    <Icon iconType={IconType.Badge} className={this._getTabIconClassName(TopicTab.QUESTIONS)}></Icon>
+                                    Questions
+                                </button>
+                                <button type="button" className={this._getTabClassName(TopicTab.LINKS)} onClick={() => { this._selectTab(TopicTab.LINKS) }}>
+                                    <Icon iconType={IconType.Link} className={this._getTabIconClassName(TopicTab.LINKS)}></Icon>
+                                    Links
+                                </button>
+                                <button type="button" className={this._getTabClassName(TopicTab.SANDBOX)} onClick={() => { this._selectTab(TopicTab.SANDBOX) }}>
+                                    <Icon iconType={IconType.Code} className={this._getTabIconClassName(TopicTab.SANDBOX)}></Icon>
+                                    Sandbox
+                                </button>
+                            </>
+                        }
                     </div>
                 </div>
                 <div className="">
-                    {this.state.activeTab === TopicTab.QUESTIONS ?
+                    {this.state.activeTab === TopicTab.QUESTIONS && this.props.categoryId !== Category.RANDOM ?
                         <div className="mx-4 py-1">
                             <Toggle offText={'Show All'} onText={'Hide All'} change={this.toggleAll}></Toggle>
                         </div>
-                        : ''}
+                        :
+                        <div className="mx-4 mt-2 py-1 text-sm text-gray-400">
+                            #<span className="text-gray-400">{this.state.questions[0]?.id()}</span>
+                            <span className="pl-4 text-gray-400">{CategoryName.get(this.state.questions[0]?.catId())}</span>
+                        </div> 
+                        }
                     <dl className="expandables-container">
                         {this.state.activeTab === TopicTab.QUESTIONS ? this._getQuestions() : ''}
                         {this.state.activeTab === TopicTab.LINKS ? this._getLinks() : ''}
@@ -87,15 +114,50 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
         }
     }
 
-    private _setCategory() {
-        this.setState({
-            questions: this._allQuestions.filter(x => x.catId() === this.props.categoryId),
-            links: this._allLinks.filter(x => x.catId() === this.props.categoryId),
-            sandboxes: this._allSandboxes.filter(x => x.catId() === this.props.categoryId),
-        });
+    private _setCategory = () => {
+        if(this.props.categoryId === Category.RANDOM) {
+            let shuffledQuestions = this._getShuffledQuestions();
+            this.setState({
+                questions: [shuffledQuestions[0]],
+                links: [],
+                sandboxes: [],
+                randomQuestions: shuffledQuestions,
+            });
+            
+        } else {
+            this.setState({
+                questions: this._allQuestions.filter(x => x.catId() === this.props.categoryId),
+                links: this._allLinks.filter(x => x.catId() === this.props.categoryId),
+                sandboxes: this._allSandboxes.filter(x => x.catId() === this.props.categoryId),
+                randomQuestions: []
+            });
+        }
     }
 
-    private _getQuestions() {
+    private _getShuffledQuestions = () => {
+        let questions = this._allQuestions.slice();
+        let len = questions.length;
+        //shuffle by traversing whole array and moving each to a random new spot
+        for(let i = 0; i < len; i++) {
+            let randomIdx = Math.floor(Math.random()*len);
+            let temp = questions[randomIdx];
+            questions[randomIdx] = questions[i];
+            questions[i] = temp;
+        }
+        return questions;
+    }
+
+    private _nextRandom = (incVal: number) => {
+        let newIdx = this.state.randomQuestionIdx + incVal;
+        if(newIdx >= this.state.randomQuestions.length) {
+            newIdx = 0;
+        } else if(newIdx < 0) {
+            newIdx = this.state.randomQuestions.length - 1;
+        }
+        this.setState({randomQuestionIdx: newIdx, questions: [this.state.randomQuestions[newIdx]]});
+    }
+
+    private _getQuestions = () => {
         if (this.state.questions && this.state.questions.length) {
             return this.state.questions.map((q) => {
                 return (
@@ -122,7 +184,7 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
         }
     }
 
-    private _getLinks() {
+    private _getLinks = () => {
         if (this.state.links && this.state.links.length) {
             return this.state.links.map((l) => {
                 return (
@@ -147,8 +209,7 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
         }
     }
 
-    private _getSandbox() {
-        //TODO: get fiddles
+    private _getSandbox = () => {
         if (this.state.sandboxes && this.state.sandboxes.length) {
             return this.state.sandboxes.map((s) => {
                 return (
@@ -173,18 +234,22 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
         }
     }
 
-    private _getTabClassName = (tab: TopicTab): string => {
+    private _getTabClassName = (tab?: TopicTab): string => {
         let classNameSelected = `flex flex-col sm:flex-row items-center font-medium text-gray-300 py-2 sm:py-3 border-b-2 border-gray-200 focus:outline-none`;
         let className = `flex flex-col sm:flex-row items-center font-medium text-gray-500 hover:text-gray-400 py-2 sm:py-3 border-b-2 border-transparent focus:outline-none`;
 
-        return (tab === this.state.activeTab) ? classNameSelected : className;
+        let result = (tab === TopicTab.RANDOM_TOGGLE || tab === this.state.activeTab) ? classNameSelected : className;
+        if(tab === TopicTab.RANDOM_TOGGLE) {
+            result = result.replace('border-b-2', '');
+        }
+        return result;    
     }
 
-    private _getTabIconClassName = (tab: TopicTab): string => {
+    private _getTabIconClassName = (tab?: TopicTab): string => {
         let classNameSelected = `w-6 sm:w-5 sm:mr-2`;
         let className = `w-6 sm:w-5 sm:mr-2`;
-        //they're the same for now
-        return (tab === this.state.activeTab) ? classNameSelected : className;
+        //they're the same for now!!
+        return (tab === TopicTab.RANDOM_TOGGLE || tab === this.state.activeTab) ? classNameSelected : className;
     }
 
     private _selectTab = (tab: TopicTab) => {

@@ -52,6 +52,7 @@ export enum Category {
     JSWEBDOM = 3,
     SQL = 4,
     GENERAL = 5,
+    RANDOM = 6,
 
     //To add
     //Finance
@@ -59,14 +60,15 @@ export enum Category {
     //Python
 }
 
-export const Routes = new Map<number, string>([
-    [Category.DOTNET, '/'],
-    [Category.DOTNET, '/dotnet'],
-    [Category.ANGULAR, '/angular'],
-    [Category.JSWEBDOM, '/jswebdom'],
-    [Category.SQL, '/sql'],
-    [Category.GENERAL, '/general'],
-]);
+// export const Routes = new Map<number, string>([
+//     [Category.DOTNET, '/'],
+//     [Category.DOTNET, '/dotnet'],
+//     [Category.ANGULAR, '/angular'],
+//     [Category.JSWEBDOM, '/jswebdom'],
+//     [Category.SQL, '/sql'],
+//     [Category.GENERAL, '/general'],
+//     [Category.RANDOM, '/random'],
+// ]);
 
 export const CategoryName = new Map<number, string>([
     [Category.DOTNET, 'C# .NET'],
@@ -74,6 +76,7 @@ export const CategoryName = new Map<number, string>([
     [Category.JSWEBDOM, 'JS, Web, DOM'],
     [Category.SQL, 'SQL Server'],
     [Category.GENERAL, 'General'],
+    [Category.RANDOM, 'Random'],
 ]);
 export const CategoryDescription = new Map<number, string>([
     [Category.DOTNET, 'C# .NET, Core'],
@@ -81,4 +84,5 @@ export const CategoryDescription = new Map<number, string>([
     [Category.JSWEBDOM, 'JS Web DOM Browser'],
     [Category.SQL, 'SQL and SQL Server, NoSQL'],
     [Category.GENERAL, 'OOP, Architecture, Source Control, Patterns, etc...'],
+    [Category.RANDOM, 'Random Topic'],
 ]);
