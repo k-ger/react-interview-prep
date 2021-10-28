@@ -165,6 +165,11 @@ export default class DataService {
             Category.DOTNET
         ));
         links.push(new Link(id++,
+            "50+ Interview Questions For Your CSharp Interview",
+            "https://tutorials.eu/50-interview-questions-for-your-csharp-interview/",
+            Category.DOTNET
+        ));
+        links.push(new Link(id++,
             "Angular Interview Questions (50)",
             `angular-questions.html`,
             Category.ANGULAR
@@ -738,7 +743,7 @@ export default class DataService {
             `How do you authenticate users? (What are the different types of authentication?)`,
             `Authentication = determining identity.  
             </br>Types:
-            </br>- Basic authentication: challenge/response format. Client will request a secure resource from server, server will challenge client to authenticate,
+            </br>- Basic authentication: challenge/response format. Server will request a secure resource from server, server will challenge client to authenticate,
             and client will request back with credentials to auth. 
             </br>- Digest authentication: Same as above, but server challenges by responding with a <strong>nonce</strong>. This is an arbitrary number that can only be used once.  
             Client sends a digest of the password - computed using hashing algo with a nonce that the server provides.
@@ -1335,11 +1340,22 @@ export default class DataService {
             Category.GENERAL
         ));    
         questions.push(new Question(id++,
+            `What are some common Programming Paradigms?`,
+            `<strong>Object Oriented</strong>: Organize data and logic in objects (properties + methods).  Organize code in logical entities.
+            </br><strong>Procedural</strong>: Write sequential series of execution steps/tasks.  "Top to bottom" code execution.
+            </br><strong>Functional</strong>: Organize code in pure functions with clearly-defined tasks.  Pass data around via params.`,
+            Category.GENERAL
+        ));
+        questions.push(new Question(id++,
             `What is Functional Programming?`,
             `Functional programming (often abbreviated FP) is the process of building software by composing pure functions, avoiding shared state, mutable data, and side-effects. 
             Functional programming is declarative rather than imperative, and application state flows through pure functions. 
             Contrast with object oriented programming, where application state is usually shared and colocated with methods in objects.
-            Pure functions, Function composition, Avoid shared state, Avoid mutating state, Avoid side effects.`,
+            Pure functions, Function composition, Avoid shared state, Avoid mutating state, Avoid side effects.
+            </br></br>Advantages:
+            </br>- Easier to test
+            </br>- Leads to fewer bugs
+            </br>- Concurrency is safer`,
             Category.GENERAL
         ));
         questions.push(new Question(id++,

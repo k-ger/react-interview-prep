@@ -59,6 +59,15 @@ export enum Category {
     //Python
 }
 
+export const Routes = new Map<number, string>([
+    [Category.DOTNET, '/'],
+    [Category.DOTNET, '/dotnet'],
+    [Category.ANGULAR, '/angular'],
+    [Category.JSWEBDOM, '/jswebdom'],
+    [Category.SQL, '/sql'],
+    [Category.GENERAL, '/general'],
+]);
+
 export const CategoryName = new Map<number, string>([
     [Category.DOTNET, 'C# .NET'],
     [Category.ANGULAR, 'Angular'],
