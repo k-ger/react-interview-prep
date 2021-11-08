@@ -240,7 +240,8 @@ export default class DataService {
             </br>3. Optional but recommended: Overload the <code>==</code> and <code>!=</code> operators.
             </br>4. Override <code>Object.GetHashCode</code> so that two objects that have value equality produce the same hash code.
             </br>5. Optional: To support definitions for "greater than" or "less than," implement the <code>IComparable</code> interface for your type, 
-            and also overload the <code><=</code> and <code>>=</code> operators.
+            and also overload the <code><=</code> and <code>>=</code> operators
+            </br></br> Note that <code>GetHashCode</code> is not intended to be guaranteed unique, its purpose is for efficient insertion into hash table/dictionary.
             `,
             Category.DOTNET
         ));
@@ -700,7 +701,7 @@ export default class DataService {
             `What triggers change detection in Angular?`,
             `1. Any browser event: click, keyup, etc...
             <br>2. setInterval(), setTimeout()
-            <br>3. HTTP Request vie XMLHttpRequest</div>`,
+            <br>3. HTTP Request via XMLHttpRequest</div>`,
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
@@ -743,17 +744,21 @@ export default class DataService {
             `How do you authenticate users? (What are the different types of authentication?)`,
             `Authentication = determining identity.  
             </br>Types:
-            </br>- Basic authentication: challenge/response format. Server will request a secure resource from server, server will challenge client to authenticate,
+            </br></br>- Basic authentication: challenge/response format. Server will request a secure resource from server, server will challenge client to authenticate,
             and client will request back with credentials to auth. 
-            </br>- Digest authentication: Same as above, but server challenges by responding with a <strong>nonce</strong>. This is an arbitrary number that can only be used once.  
+            </br></br>- Digest authentication: Same as above, but server challenges by responding with a <strong>nonce</strong>. This is an arbitrary number that can only be used once.  
             Client sends a digest of the password - computed using hashing algo with a nonce that the server provides.
-            </br>- Windows authentication: like basic/digest, but requires windows machine as web server.
-            </br>- OpenID: decentralized authorization.  One login/pwd for many sites/applications. Client is redirected to external Identity provider.
+            </br></br>- Windows authentication: like basic/digest, but requires windows machine as web server.
+            </br></br>- OpenID: decentralized authentication.  One login/pwd for many sites/applications. Client is redirected to external Identity provider.
             Provider receives clientId and client secret from server - they are used to id the site/application doing login request.
             Provider responds with a token at a Redirect URI. Token contains data (claims) to create identity cookie.
             </br>The developer of an app does not need to store (or manage) user logins/pwds.
-            </br>- MFA: Multi-factor
-            </br>- JWT: JSON Web Token`,
+            </br></br>- MFA: Multi-factor
+            </br></br>- JWT: JSON Web Token. In its compact form, JSON Web Tokens consist of three parts separated by dots, which are:
+            Header, Payload. Signature. The header typically consists of two parts: the type of the token, which is JWT, and the signing algorithm being used.
+            The second part of the token is the payload, which contains the claims. Claims are statements about an entity (typically, the user) and additional data.
+            To create the signature part you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that.
+            JWTs are sent to the server in the headers, as follows: <code>Authorization: Bearer _token_</code>`,
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
@@ -924,6 +929,14 @@ export default class DataService {
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
+            `What are the differences between local storage and session storage?  Cookies?`,
+            `Local storage and session storage are browser-managed storage containers used for storing/accessing key-value data on the client. 
+            Both follow Same Origin Policy (SOP) which prvents other domains from accessing each other's locally stored data.  
+            Session storage is a subset of local storage that is persisted only until the tab is closed. 
+            </br</br>Cookies also store key-value data, but are primarily used for server-side reading.  Setting the <code>httponly</code> flag on a cookie prvents client-side JS from accessing it.`,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
             `CSS vs SCSS vs SASS vs LESS`,
             `<strong>CSS</strong>CSS: Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a document written in a markup language such as HTML.
             Cascading refers to the algorithm that defines how to combine property values originating from different sources. Children elements typically inherit parent's properties.
@@ -1089,7 +1102,7 @@ export default class DataService {
             `Difference between a temp table and a table variable?`,
             `- Temp tables can be modified (ALTER CREATE DELETE), table variables cannot.  Table variables cannot be dropped explicitly, only automatically.
             </br>- Temp tables not allowed to be defined in UDFs, table variables allowed.
-            </br>- Temp tables support indeces, table variables only support a PK or unique Key, no other indeces.
+            </br>- Temp tables support indices, table variables only support a PK or unique Key, no other indices.
             </br>- Scope of temp table is in the proc it was created in, and children procs of that proc.  Table variable scope is
             the batch or proc it was declared in.
             `,
@@ -1366,7 +1379,7 @@ export default class DataService {
             </br></br>Continuous Delivery: an extension of CI to make sure you can release new changes to your customers quickly in a sustainable way.
             Automate release process to deploy with a single click. 
             Benefits: release more often, accelerating the feedback loop w/users.
-            </br></br>Continuous Deployment: one step further: every change that passesall stages of prod pipeline released - no human interaction.
+            </br></br>Continuous Deployment: one step further: every change that passes all stages of prod pipeline released - no human interaction.
             Benefits: develop faster since there is no need to pause for release. Releases are less risky since smaller incremental changes.`,
             Category.GENERAL
         ));
