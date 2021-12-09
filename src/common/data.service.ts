@@ -937,6 +937,18 @@ export default class DataService {
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
+            `Your web site is slow.  How do you make it faster?`,
+            `<u>1. Enable Compression.</u> Use <i>Gzip</i>, a software application for file compression, to reduce the size of your CSS, HTML, and JavaScript files that are larger than 150 bytes.
+            </br></br> <u>2. Minify CSS, JS and HTML.</u> By optimizing your code, you can dramatically increase page speed.  Also, remove comments, fromatting, and unused code. <i>CSSNano</i>, <i>UglifyJS</i> 
+            </br></br> <u>3. Remove render-blocking JS.</u> Browsers have to build a DOM tree by parsing HTML before they can render a page. If your browser encounters a script during this process, it has to stop and execute it before it can continue. Use <i>async</i>, <i>defer</i> scripts, or move to bottom of html.
+            </br></br> <u>4. Leverage browser caching.</u> Browsers cache a lot of information (stylesheets, images, JS files, and more). Set expiration of cached items (expires header) appropriately.  
+            </br></br> <u>5. Use CDN</u> . Content distribution networks (CDNs), also called content delivery networks, are networks of servers that are used to distribute the load of delivering content.
+            Essentially, copies of your site are stored at multiple, geographically diverse data centers so that users have faster and more reliable access to your site.
+            </br></br> <u>6. Optimize images.</u> Be sure that your images are no larger than they need to be, that they are in the right file format (PNGs are generally better for graphics, while JPEGs are generally better for photographs) and that they are compressed for the web.
+            </br></br> <u>Also:</u> Use CSS Sprites, improve server response time by analyzing bottlenecks, reduce redirects, etc.`,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
             `CSS vs SCSS vs SASS vs LESS`,
             `<strong>CSS</strong>CSS: Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a document written in a markup language such as HTML.
             Cascading refers to the algorithm that defines how to combine property values originating from different sources. Children elements typically inherit parent's properties.
@@ -1264,6 +1276,14 @@ export default class DataService {
             </br>4. Interface segregation principle: A client should never be forced to implement an interface that it doesn't use or clients shouldn't be forced to depend on methods they do not use.
             </br>5. Dependency Inversion principle: Entities must depend on abstractions not on concretions. 
             It states that the high level module must not depend on the low level module, but they should depend on abstractions.
+            `,
+            Category.GENERAL
+        ));
+        questions.push(new Question(id++,
+            `What is Web Assembly? How does it work?`,
+            `Web Assembly is code that has been compiled for your browser. A VM in the browser, that runs web assembly bytecode.  
+            </br></br>Many high level languages (C#, Rust, Python, etc) can be compiled into web assembly (.wasm file) and executed in the browser.  
+            Wasm can talk to JS, which can interact with the DOM, but wasm can't (yet) interact with the DOM itself.  Faster than JS because it's already compiled.
             `,
             Category.GENERAL
         ));

@@ -8,7 +8,11 @@ interface IFadeInContainerProps {
 
 const FadeInContainer = (props: IFadeInContainerProps) => {
     return (
-        <animated.div className={props.className} style={useSpring({opacity: 1, from: {opacity: 0}})}>
+        <animated.div className={props.className} style={useSpring({
+                opacity: 1, from: {opacity: 0}
+                // from: {filter: 'blur(16px)'},
+                // to: {filter: 'blur(0px)'}
+            })}>
             {props.children}
         </animated.div>
     );
