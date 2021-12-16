@@ -83,7 +83,8 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
                     </div>
                 </div>
                 <div className="">
-                    {this.state.activeTab === TopicTab.QUESTIONS && this.props.categoryId !== Category.RANDOM ?
+                    {
+                        this.props.categoryId !== Category.RANDOM ?
                         <div className="mx-4 py-1">
                             <Toggle offText={'Show All'} onText={'Hide All'} change={this.toggleAll}></Toggle>
                         </div>
@@ -92,7 +93,7 @@ class TopicPage extends Component<ITopicPageProps, ITopicPageState> {
                             #<span className="text-gray-400">{this.state.questions[0]?.id()}</span>
                             <span className="pl-4 text-gray-400">{CategoryName.get(this.state.questions[0]?.catId())}</span>
                         </div> 
-                        }
+                    }
                     <dl className="expandables-container">
                         {this.state.activeTab === TopicTab.QUESTIONS ? this._getQuestions() : ''}
                         {this.state.activeTab === TopicTab.LINKS ? this._getLinks() : ''}

@@ -96,7 +96,7 @@ export default class DataService {
         ));
         links.push(new Link(id++,
             "What's New in C# (MSDN)",
-            "https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6",
+            "https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8",
             Category.DOTNET
         ));
         links.push(new Link(id++,
@@ -226,6 +226,12 @@ export default class DataService {
             </br>A Task can create 1 or more threads. (Thread pool threads).
             </br>A task can return a result. There is no direct mechanism to return a result from a thread.
             Task supports cancellation through the use of cancellation tokens. Thread doesn't.`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
+            `How do you cancel a Task?`,
+            `You instantiate a new <code>CancellationTokenSource()</code>, and pass this CTS's <code>.Token</code> to your task before starting it.  
+            Now you can call <code>.Cancel()</code> on your CTS, and the cancellation will be async.`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -369,9 +375,13 @@ export default class DataService {
         questions.push(new Question(id++,
             `How to handle multi-threaded exceptions?`,
             `With tasks: 
-            </br>- If await used, can use Try Catch Finally, as usual.  If not, AggregateException? Use handle() and flatten().  
-            </br> If you use Task with ContinueWith, exceptions thrown will not escape the task; you have to instead inspect properties of the Task when it completes, 
-            including the InnerExceptions property of the AggregateException that the completed Task exposes to you.`,
+            </br>- If <code>await</code> used, can use Try Catch Finally, as usual. The exception will be captured and re-thrown on the Task (stack trace will be preserved). 
+            If not, can use AggregateException. Use <code>handle()</code> and <code>flatten()</code> to help.  
+            </br> If you use Task with <code>ContinueWith</code>, exceptions thrown will not escape the task; you have to instead inspect properties of the Task when it completes, 
+            including the <code>InnerExceptions</code> property of the <code>AggregateException</code> that the completed Task exposes to you.
+            </br></br>
+            Avoid using <code>async void</code>.  There is no <i>good</i> solution for handling exceptions in one of these methods.
+            `,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -472,7 +482,8 @@ export default class DataService {
             `What is Volatile?`,
             `The volatile keyword indicates that a field might be modified by multiple threads that are executing at the same time. The compiler, the runtime system, 
             and even hardware may rearrange reads and writes to memory locations for performance reasons. Fields that are declared volatile are not subject to these optimizations. 
-            Adding the volatile modifier ensures that all threads will observe volatile writes performed by any other thread in the order in which they were performed. 
+            Adding the volatile modifier ensures that all threads will observe volatile writes performed by any other thread in the order in which they were performed.
+            Volatile keyword tells compiler not to cache the field (in CPU register), but instead read and write it to memory every time. 
             Can only be applied to fields of a class or struct. Local variables cannot be declared volatile. No doubles or longs!`,
             Category.DOTNET
         ));
@@ -607,7 +618,6 @@ export default class DataService {
             </br>1. TSLint support ends, ESLint now used
             </br>2. Typescript 4.0
             </br>3. Webpack 5
-            
             `,
             Category.ANGULAR
         ));
@@ -629,8 +639,8 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `What are pipes?`,
-            `Functions that transform an input into an output.  Let you declare display-value transformations in yout template HTML.
-            Defined using @Pipe decorator.  Can chain pipes, and can pass args to them.
+            `Functions that transform an input into an output.  Let you declare display-value transformations in your template HTML.
+            Defined using <code>@Pipe</code> decorator.  Can chain pipes, and can pass args to them.
             </br>Built in pipes: date, currency, number...etc.`,
             Category.ANGULAR
         ));
@@ -638,6 +648,36 @@ export default class DataService {
             `What is ng-template and how is it used?`,
             `Angular element for rendering HTML. It is never displayed directly. In fact, before rendering the view, Angular replaces the ng-template and its contents with a comment.
             If there is no structural directive and you merely wrap some elements in a ng-template, those elements disappear. `,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `How do you manage subscriptions in Angular?`,
+            `Here are some strategies that are better than manually unsubscribing:
+            </br></br>
+            
+            1. RXJs <strong>first</strong>:  The first operator will take only the first value emitted, or the first value that meets the specified criteria. Then it will complete and unsubscribe.
+            </br><code>myObs$.pipe(first().subscribe(...))</code>
+            </br></br>
+            2. RXJs <strong>take</strong>:  Like <code>first</code> but takes up to a max of n times. (n is input parameter).
+            </br><code>myObs$.pipe(take(5).subscribe(...))</code>
+            </br></br>
+            3. RXJs <strong>takeUntil</strong>: Like take, but takes another observable as a parameter, and returns until this other obs emits (.next()).
+            </br><code>
+            const notifier$ = new Subject();</br>
+            obs$.pipe(takeUntil(notifier$)).subscribe(...)</br>
+            //then, in destructor</br>
+            notifier$.next();</br>
+            notifier$.complete();  //need to unsubscribe from this obs as well!
+            </code>
+            </br></br>
+            4. <strong>Async pipe</strong>: Used in HTML. This pipe will subscribe to an Observable in the template, and when the template is destroyed, it will unsubscribe from the Observable automatically.
+            </br><code>
+                {{obs$ | async}}
+            </code>
+            </br></br>
+            5. 3rd party libraries like <strong>untilDestroyed,subsink</strong>.
+            
+            `,
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
@@ -840,7 +880,8 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `What is the difference between let, var and const in Javascript?`,
-            `Let and const are block scoped and not hoisted. Var is function scoped, and will be hoisted.`,
+            `Let and const are block scoped and not hoisted. Var is function scoped, and will be hoisted.
+            </br>Let can be reassigned.  Const cannot be reassigned, but it can be mutated (if it is an object, you can modify it's properties).`,
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
@@ -950,7 +991,7 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `CSS vs SCSS vs SASS vs LESS`,
-            `<strong>CSS</strong>CSS: Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a document written in a markup language such as HTML.
+            `<strong>CSS</strong>: Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a document written in a markup language such as HTML.
             Cascading refers to the algorithm that defines how to combine property values originating from different sources. Children elements typically inherit parent's properties.
             If property assigned multiple times (with same specificity) the last one will be used.
             </br></br>
@@ -1149,6 +1190,37 @@ export default class DataService {
             `What are CTEs?`,
             `Common Table Expression: CTE is a disposable view hence no statistics are stored and you can't create Indexes either. 
             It is just like a sub query. Can be called recursively. 
+            `,
+            Category.SQL
+        ));
+        questions.push(new Question(id++,
+            `How do recursive CTEs work?`,
+            `CTE will need to have 2 parts: an <u>anchor</u> member, and a <u>recursive</u> member.  </br>
+            </br>1. The anchor member is a query that gets executed.
+            </br>2. The anchor is passed as an 'input' to the recursive member; it is unioned with the recursive member via <code>UNION ALL</code>.
+            </br>3. The recursive member calls the CTE (can be joined to another table/view, etc here...)  
+            </br>4. The recursive member <u>must have a <code>WHERE</code> clause</u> that will stop it from recursing once a certain criteria is met.  
+            Otherwise, recursion will be infinite! (Will error out after 100 levels in SQL Server)
+            </br></br>
+            Here is the order of execution:
+            </br>1. The anchor query is selected.
+            </br>2. The recursive part is run with the anchor as the result.
+            </br>3. The recursive part is run with the result of step 2.
+            </br>4. The recursive part runs with the previous result as 'input' until the where clause matches no records.
+            </br>5. At this point, the anchor part, UNIONED with <u>all of the individual results of the recursive part</u> is returned.
+            </br></br>
+            Simple example that produces a table of values from 0 to 10:</br>
+            <code><pre>
+            WITH CTE as (
+                SELECT 0 AS Num
+                UNION ALL
+                SELECT Num + 1 AS Num
+                FROM CTE 
+                WHERE Num < 10
+            )
+            SELECT * FROM CTE
+            </pre></code>
+
             `,
             Category.SQL
         ));
