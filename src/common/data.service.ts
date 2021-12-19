@@ -200,12 +200,33 @@ export default class DataService {
             Event adds layer of abstraction and protection on the delegate instance. 
             This prevents 'clients' of the delegate from resetting the delegate and its invocation list; it only allows adding or removing.  
             No code from outside the class where event is declared can raise it.</br>
-            Delegates support events.  They give your program a way to execute methods at run time without knowing which methods they are at compile time.`,
+            Delegates support events.  They give your program a way to execute methods at run time without knowing which methods they are at compile time.
+            </br>Another way of defining an event: A delegate reference with 2 restrictions: you can't invoke it directly, and you can't assign to it directly.`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
             `What structure or Type is Delegate?  What is it derived from? What inherits it?`,
-            `System.Object > System.Delegate > System.MulticastDelegate`,
+            `System.Object > System.Delegate > System.MulticastDelegate
+            </br></br>
+            Delegates compile to <u>Classes</u> in IL.</br>
+            Delegate chaining (myDel += SomeMethod) is just syntax sugar for <code>Delegate.Combine(myDel, SomeMethod)</code>.
+            </br>
+            If you want to get the list of methods that a delegate holds, you can call <code>.GetInvokationList()</code> on the delegate.  You can iterate thru this list using foreach.
+            `,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
+            `What are some ways to run a delegate?`,
+            `2 ways: Invoke as a method, or run <code>.Invoke()</code> on it.
+            </br></br>
+            Example:</br>
+            <code>
+            delegate void ADelegate();
+            </br>ADelegate myDelegate = SomeMethodAlreadyDefined;
+            </br>myDelegate(); //approach #1
+            </br>myDelegate.Invoke(); //approach #2
+            </code>
+            `,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -270,6 +291,15 @@ export default class DataService {
             &emsp;        get{ return instance;}</br>
             &emsp;    }</br>
             }</br></code>`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
+            `Static class vs Singleton: what are the differences, and when to use which?`,
+            `Use Static class if you don't have to store state, and you don't need precise control over how/when it is initialized and finalized.
+            Use Singleton if you want to store state, and care about how/when it is initialized/finalized.
+            </br></br>
+            Static classes cannot implement interfaces and cannot participate in inheritance, unlike Singleton (theoretically).
+            </br>Static classes can only have static methods, and they cannot be passed as a reference to a method, unlike Singleton.`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
