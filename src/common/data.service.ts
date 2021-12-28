@@ -30,7 +30,7 @@ export default class DataService {
             Category.SQL
         ));
         links.push(new Link(id++,
-            "Tutorial – SessionStack Blog",
+            "Tutorial - SessionStack Blog",
             "https://blog.sessionstack.com/tagged/tutorial",
             Category.GENERAL
         ));
@@ -135,7 +135,7 @@ export default class DataService {
             Category.ANGULAR
         ));
         links.push(new Link(id++,
-            "SOLID Principles made easy – Hacker Noon",
+            "SOLID Principles made easy - Hacker Noon",
             "https://hackernoon.com/solid-principles-made-easy-67b1246bcdf",
             Category.GENERAL
         ));
@@ -309,7 +309,10 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `What causes GC to collect gen 1?`,
-            `After GC performs collection of G0 and there is still not enough momory to create a new object, G1 will be collected, then G2.`,
+            `After GC performs collection of G0 and there is still not enough momory to create a new object, G1 will be collected, then G2.
+            </br></br>
+            Each gen has a budget.  If each is exceeded, then the corresponding gen will be collected.  (G0: 256KB, G1: 2MB, G2: 10MB).
+            Budgets automatically get adjusted as the application runs.`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -360,8 +363,8 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `What's the difference between IEnumerable and IQueryable?`,
-            `IQueryable extends IEnumerable.  Both IEnumerable and IQueryable can only move forward over a collection, can’t move backward or between the items.  
-            </br>- IEnumerable Doesn’t support lazy loading, IQueryable does.
+            `IQueryable extends IEnumerable.  Both IEnumerable and IQueryable can only move forward over a collection, can't move backward or between the items.  
+            </br>- IEnumerable Doesn't support lazy loading, IQueryable does.
             </br>- IEnumerable is suitable for LINQ to Object and LINQ to XML queries.
             </br>- IQueryable is suitable for LINQ to SQL queries.
             </br>- IEnumerable is best to query data from in-memory collections like List, Array etc.`,
@@ -389,11 +392,31 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `Dispose vs Finalize!`,
-            `Dispose method is for disposing objects in .NET. - releasing resources, prevent memory leaks.
+            `Dispose method is for disposing objects in .NET. - releasing unmanaged resources, prevent memory leaks.
             GC can reclaim or release only memory which is used by managed resources. (DB connection = not managed resource)</br>
             Finalize method also called destructor to the class. 
-            Finalize method can not be called explicitly in the code. Only Garbage collector can call the Finalize when object become inaccessible. 
+            Finalize method can not be called explicitly in the code. Only Garbage collector can call Finalize when object becomes inaccessible. 
             One should not implement the Finalize method until it is absolutely necessary.`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
+            `How does Finalize work?`,
+            `If an object defines a <b>Finalize</b> method, a pointer to the object is placed on the <i>finalization list</i>, right before it is initialized.  
+            This is a list owned by the GC that tells it which objects need to have <b>Finalize</b> called.
+            When these object are being garbage collected, their pointers get moved from <i>finalization list</i> to <i>f-reachable queue</i>.
+            Once the f-reachable queue isn't empty anymore, a dedicated thread begins processing the objects from the pointers one by one, calling their <b>Finalize</b> method.
+            While in f-reachable queue, objects are roots, so any objects they reference are not subject to GC. Once out of queue, they are subject to be reclaimed.`,
+            Category.DOTNET
+        ));
+        questions.push(new Question(id++,
+            `What are some common causes of memory leaks in .NET?`,
+            `<strong>Not unsubscribing event handlers</strong> - Let's say you have an event, and another class subscribes to this event 
+            (adds a delegate to the event's invokation chain).  If this other class is instantiated, and then goes out of scope, or is set to <code>null</code>,
+            the Event class still holds a reference to it, so it will not be garbage collected.  Need to dispose (unsubscribe from event) in the other class 
+            before it is dereferenced/destroyed.
+            </br></br><strong>Storing objects in a static collection</strong> - static collections will not be garbage collected, so any object they store a ref to will never get collected.
+            </br></br><strong>Keeping database connections open</strong>
+            </br></br><strong>Call to C++ functions using p/Invoke which allocate memory which you then never release</strong>`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -456,7 +479,7 @@ export default class DataService {
         questions.push(new Question(id++,
             `Managed code vs unmamaged.  Advantages and disadvantages of each?`,
             `Managed code is code executed under control of the CLR.  Benefits: can mix languages, better security (auto memory management, GC, exception handling), support version control.</br>
-            Unmanaged code: executed outside the CLR, or directly by the OS. Provides low-level access to programmer, direct access to HW. Can be faster, but you need to manage memory yourself.`,
+            Unmanaged code: executed outside the CLR, or directly by the OS. Provides low-level access to programmer, direct access to memory (pointers), HW. Can be faster, but you need to manage memory yourself.`,
             Category.DOTNET
         ));
         questions.push(new Question(id++,
@@ -549,7 +572,7 @@ export default class DataService {
             `Announced May 2019 - A unification of .NET implementations.  (Framework, Core and Standard).  Came from the realization that maintaining similar parallel codebases for each was unnecessary.
             Paired with C# 9. 
             This unified version of .NET 5 will support all .NET application types: Xamarin, ASP.NET, IoT and desktop. Furthermore, it will leverage a single CoreFX/Base Class Library (BCL), 
-            two separate runtimes and runtime code bases (because it’s really hard to single source two runtimes intended to be critically different), and a single tool chain (such as dotnet CLI). 
+            two separate runtimes and runtime code bases (because it's really hard to single source two runtimes intended to be critically different), and a single tool chain (such as dotnet CLI). 
             The result will be uniformity across behaviors, APIs and developer experiences. 
             For example, rather than having three implementations of the System.* APIs, there will be a single set of libraries that run on each of the different platforms.
             `,
@@ -721,10 +744,10 @@ export default class DataService {
             <br><br>
             <code>
             const routes: Routes = [
-            <br>     {
-            <br>      path: 'items',
-            <br>      loadChildren: () =&gt; import('./items/items.module').then(m =&gt; m.ItemsModule)
-            <br>     }
+            <br>     {
+            <br>      path: 'items',
+            <br>      loadChildren: () =&gt; import('./items/items.module').then(m =&gt; m.ItemsModule)
+            <br>     }
             <br>];`,
             Category.ANGULAR
         ));
@@ -833,12 +856,12 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `What are the principles of REST?`,
-            `1. <strong>Client–server</strong> – By separating the user interface concerns from the data storage concerns, we improve the portability of the user interface across multiple platforms and improve scalability by simplifying the server components.
-            <br><br>2. <strong>Stateless</strong> – Each request from client to server must contain all of the information necessary to understand the request, and cannot take advantage of any stored context on the server. Session state is therefore kept entirely on the client.
-            <br><br>3. <strong>Cacheable</strong> – Cache constraints require that the data within a response to a request be implicitly or explicitly labeled as cacheable or non-cacheable. If a response is cacheable, then a client cache is given the right to reuse that response data for later, equivalent requests.
-            <br><br>4. <strong>Uniform interface</strong> – By applying the software engineering principle of generality to the component interface, the overall system architecture is simplified and the visibility of interactions is improved. In order to obtain a uniform interface, multiple architectural constraints are needed to guide the behavior of components. REST is defined by four interface constraints: identification of resources; manipulation of resources through representations; self-descriptive messages; and, hypermedia as the engine of application state.
-            <br><br>5. <strong>Layered system</strong> – The layered system style allows an architecture to be composed of hierarchical layers by constraining component behavior such that each component cannot “see” beyond the immediate layer with which they are interacting.
-            <br><br>6. <strong>Code on demand</strong> (optional) – REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This simplifies clients by reducing the number of features required to be pre-implemented.`,
+            `1. <strong>Client-server</strong> - By separating the user interface concerns from the data storage concerns, we improve the portability of the user interface across multiple platforms and improve scalability by simplifying the server components.
+            <br><br>2. <strong>Stateless</strong> - Each request from client to server must contain all of the information necessary to understand the request, and cannot take advantage of any stored context on the server. Session state is therefore kept entirely on the client.
+            <br><br>3. <strong>Cacheable</strong> - Cache constraints require that the data within a response to a request be implicitly or explicitly labeled as cacheable or non-cacheable. If a response is cacheable, then a client cache is given the right to reuse that response data for later, equivalent requests.
+            <br><br>4. <strong>Uniform interface</strong> - By applying the software engineering principle of generality to the component interface, the overall system architecture is simplified and the visibility of interactions is improved. In order to obtain a uniform interface, multiple architectural constraints are needed to guide the behavior of components. REST is defined by four interface constraints: identification of resources; manipulation of resources through representations; self-descriptive messages; and, hypermedia as the engine of application state.
+            <br><br>5. <strong>Layered system</strong> - The layered system style allows an architecture to be composed of hierarchical layers by constraining component behavior such that each component cannot “see” beyond the immediate layer with which they are interacting.
+            <br><br>6. <strong>Code on demand</strong> (optional) - REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. This simplifies clients by reducing the number of features required to be pre-implemented.`,
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
@@ -923,12 +946,12 @@ export default class DataService {
         questions.push(new Question(id++,
             `What is a closure, how does it work?  What is variable scope?`,
             `A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). 
-            In other words, a closure gives you access to an outer function’s scope from an inner function. 
+            In other words, a closure gives you access to an outer function's scope from an inner function. 
             In JavaScript, closures are created every time a function is created, at function creation time.
             </br></br>The scope of a variable is controlled by the location of the variable declaration, and defines the part of the program where a particular variable is accessible.
-            JavaScript has two scopes – global and local. Any variable declared outside of a function belongs to the global scope, and is therefore accessible from anywhere in your code. 
+            JavaScript has two scopes - global and local. Any variable declared outside of a function belongs to the global scope, and is therefore accessible from anywhere in your code. 
             Each function has its own scope, and any variable declared within that function is only accessible from that function and any nested functions. 
-            Because local scope in JavaScript is created by functions, it’s also called function scope. When we put a function inside another function, then we create nested scope.
+            Because local scope in JavaScript is created by functions, it's also called function scope. When we put a function inside another function, then we create nested scope.
             `,
             Category.JSWEBDOM
         ));
@@ -943,11 +966,11 @@ export default class DataService {
         questions.push(new Question(id++,
             `What is the difference between observable and promises?`,
             `- Observable is a more powerful way of handling HTTP asynchronous requests. Whereas, A promise handles a single event when an asynchronous operation completes or fails.
-            </br>- An observable is like a stream which allows passing zero or more events where the callback is called for each event. Whereas, A promise eventually calls the success or failed callback even when you don’t need the notification or the result it provides anymore.
+            </br>- An observable is like a stream which allows passing zero or more events where the callback is called for each event. Whereas, A promise eventually calls the success or failed callback even when you don't need the notification or the result it provides anymore.
             </br>- Observable works with multiple values for a particular time. Whereas, Promises works with and even returns a single value at a time.
             </br>- Observables can be canceled. Whereas, Promises cannot be canceled.
             </br>- Observable supports map, filter, reduce and similar operators. Whereas, Promises have more readable codes with try/catch and async/await.
-            </br>- In observable, one operator ‘retry’ can be used to retry whenever needed. Whereas, Promises cannot be retried. A promise should have access to the original function that returned the promise in order to have a retry capability.
+            </br>- In observable, one operator 'retry' can be used to retry whenever needed. Whereas, Promises cannot be retried. A promise should have access to the original function that returned the promise in order to have a retry capability.
             `,
             Category.JSWEBDOM
         ));
@@ -967,7 +990,7 @@ export default class DataService {
             `What are Maps?  What are symbols?`,
             `The Map object holds key-value pairs and remembers the original insertion order of the keys. Any value (both objects and primitive values) may be used as either a key or a value.
             The data type symbol is a primitive data type. Every symbol value returned from Symbol() is unique.  A symbol value may be used as an identifier for object properties; this is the data type's primary purpose.
-            Use when you want to add “hidden” properties to objects that won’t be included when the object is serialized.`,
+            Use when you want to add “hidden” properties to objects that won't be included when the object is serialized.`,
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
@@ -1028,7 +1051,7 @@ export default class DataService {
             <strong>SCSS</strong>: Sassy CSS - an extension of the syntax of CSS (superset of CSS). Every valid CSS stylesheet is a valid SCSS file with the same meaning. Files using this syntax have the <code>.scss</code> extension.
             Uses brackets, indentation not required.
             </br></br>
-            <strong>SASS</strong>: Syntactically Awesome Style Sheets. (Older, more popular). A stylesheet language that’s compiled to CSS that lets you use features like variables, nesting, mixins, loops, inheritance and others which may not exist in CSS yet.
+            <strong>SASS</strong>: Syntactically Awesome Style Sheets. (Older, more popular). A stylesheet language that's compiled to CSS that lets you use features like variables, nesting, mixins, loops, inheritance and others which may not exist in CSS yet.
             CSS <i>preprocessor</i> (actual language is SassScript) that is interpreted or complied into CSS. Files using this syntax have the <code>.sass</code> extension. Indentation required, doesn't use brackets.
             </br></br>
             <strong>LESS</strong>: (Leaner Style Sheets) (Newer, less popular). is a backwards-compatible language extension for CSS. Built with JS. Similar to SASS.  
@@ -1051,7 +1074,7 @@ export default class DataService {
         questions.push(new Question(id++,
             `How does Node Work?`,
             `The Node.js run-time environment includes everything you need to execute a program written in JavaScript. Came from desire to execute JS not in a broswer.
-            It is a JS runtime built on Chrome’s V8 JS engine.
+            It is a JS runtime built on Chrome's V8 JS engine.
             Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.
             `,
             Category.JSWEBDOM
@@ -1289,7 +1312,7 @@ export default class DataService {
             `What is parameter sniffing?`,
             `SQL Server uses a process called parameter sniffing when it executes stored procedures that have parameters. 
             When the procedure is compiled or recompiled, the value passed into the parameter is evaluated and used to create an execution plan. 
-            That value is then stored with the execution plan in the plan cache. On subsequent executions, that same value – and same plan – is used.
+            That value is then stored with the execution plan in the plan cache. On subsequent executions, that same value - and same plan - is used.
             Performance issues can occur when the set of parameters that the execution plan was optimized for ends up being drastically different than the parameters that are being passed in right now.
             <br><br>
             To overcome parameter sniffing performance issue that could occur due to forcing the same plan usage for all stored procedures parameters values we can use the WITH RECOMPLIE option in the stored procedure definition, 
@@ -1366,7 +1389,7 @@ export default class DataService {
             a branch is created (e.g., “1.1 development branch” or “Release 2.1”), and all work done until the next release is stored in this branch.</br></br>
             - <strong>Feature Branching:</strong> Feature branches, which are often coupled with feature flags or toggles that enable and disable a feature within the product, 
             are used to collect a series of user stories that can be merged into a master and deployed as one complete feature.</br></br>
-            - <strong>Story or Task Branching:</strong> Story or task branching directly connects a user story to changes in source code. It’s the lowest level of branching, 
+            - <strong>Story or Task Branching:</strong> Story or task branching directly connects a user story to changes in source code. It's the lowest level of branching, 
             and each issue implemented has its own branch, which is typically associated with some user story ID.</br>`,
             Category.GENERAL
         ));
@@ -1510,7 +1533,7 @@ export default class DataService {
             `VM provides an abstract machine that uses device drivers targeting the abstract machine, while a container provides an abstract OS.
             Applications running in a container environment share an underlying operating system, while VM systems can run different operating systems. 
             Typically a VM will host multiple applications whose mix may change over time versus a container that will normally have a single application. 
-            However, it’s possible to have a fixed set of applications in a single container.`,
+            However, it's possible to have a fixed set of applications in a single container.`,
             Category.GENERAL
         ));
         questions.push(new Question(id++,
@@ -1567,7 +1590,7 @@ export default class DataService {
             Elasticsearch is a distributed, open-source search and analytics engine. 
             It allows you to store, search, and analyze huge volumes of data quickly and in near real-time and give back answers in milliseconds.
             It stores data in documents - a document can be more than just text, it can be structured data in JSON. It uses an <strong>inverted index</strong> - 
-            it doesn’t store strings directly but instead splits each document up to individual search terms 
+            it doesn't store strings directly but instead splits each document up to individual search terms 
             (i.e. each word) then maps each search term to the documents those search terms occur within. `,
             Category.GENERAL
         ));
