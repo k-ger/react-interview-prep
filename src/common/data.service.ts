@@ -670,37 +670,78 @@ export default class DataService {
             <strong>Angular 11</strong>
             </br>1. TSLint support ends, ESLint now used
             </br>2. Typescript 4.0
-            </br>3. Webpack 5
+            </br>3. Webpack 5</br></br>
+            <strong>Angular 12</strong>
+            </br>1. Nullish coalescing operator <code>??</code>
+            </br>2. Typescript 4.2
+            </br>3. Ivy Everywhere: The View Engine has finally been deprecated</br></br>
+            <strong>Angular 13</strong>
+            </br>1. Typescript 4.4
+            </br>2. 100% Ivy 
             `,
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
             `Why use Angular instead of JQuery or even just JS?`,
-            `Ease of development.  Tools like CLI offer significant productivity increase, the larger and more complex the app is.
+            `Ease of development.  Angular comes fully-featured with routing, RxJS (streams), httpClient, animations, etc...
+            Tools like CLI offer significant productivity increase, the larger and more complex the app is.
             Create boilerplate code with one command.  Lots of configuration options, plugins and libraries available.
-            Don't need to reinvent any wheels.
+            Don't need to reinvent any wheels.  Google provides long term support.
             `,
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
             `What are directives? Different kinds?`,
             `Directives are implemented as HTML attributes.  A way to add new capability to an element's display. 
-            Defined using @Directive decorator.  
-            </br>- <strong>Structural</strong>: alter layout by adding, removing, or replacing elements in DOM. *ngIf, *ngFor...
-            </br>- <strong>Attribute</strong>: alter the appearance of behavior of an existing element. *ngModel, *ngClass, *ngStyle...`,
+            Defined using @Directive decorator.  </br>
+            </br><strong>Structural</strong>: alter layout by adding, removing, or replacing elements in DOM. *ngIf, *ngFor...
+            </br>&emsp; - structural directives, <u>with the star prefix</u>, are syntactic sugar for wrapping the element it's on in an ng-template
+            </br><strong>Attribute</strong>: alter the appearance of behavior of an existing element. [ngModel], [ngClass], [ngStyle]...`,
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
             `What are pipes?`,
             `Functions that transform an input into an output.  Let you declare display-value transformations in your template HTML.
             Defined using <code>@Pipe</code> decorator.  Can chain pipes, and can pass args to them.
-            </br>Built in pipes: date, currency, number...etc.`,
+            </br>Built in pipes: date, currency, number...etc.
+            
+            </br></br>
+            <u>Creating pipes</u>: create a class, add <code>@Pipe</code> decorator, and implement the <code>PipeTransform</code> interface.  Pipe is executed whenever Angular detects the input value changed.
+
+            </br></br>
+            <u>Pure vs impure pipes</u>: Pure pipes use pure functions (have no side effects).  <strong>Pipes are pure by default.</strong> Set <code>{pure: false}</code>.
+            Pure pipes will not work the way you want with arrays as an input.  If the values of the array change (in a pure pipe), change detection will not run bc the reference hasn't changed.
+            To mitigate, can set the array to a new instance every time you update it.  But, generally, if you want to use pipes with <strong>composite objects</strong>, you want to use impure pipes.
+            This way, change detection will run on every keystroke, mouse movement...
+
+            </br></br>Pipes have higher precedence than trenary operator (<code>?</code>)! 
+            `,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `What is async pipe?`,
+            `Async pipe subscribes to an Observable or a promise, and returns the latest value it has emitted.  When a new value is emitted,
+            the async pipe marks the component to be checked for changes.  When the component gets destroyed, the async pipe unsubscribes automatically - no mem leaks.
+            </br>When the reference of the expression changes, the async pipe automatically unsubscribes from the old Observable/Promise and subs to new one.`,
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
             `What is ng-template and how is it used?`,
-            `Angular element for rendering HTML. It is never displayed directly. In fact, before rendering the view, Angular replaces the ng-template and its contents with a comment.
-            If there is no structural directive and you merely wrap some elements in a ng-template, those elements disappear. `,
+            `Angular element for rendering HTML. It is never displayed directly. Lazy, not rendered by default. In fact, before rendering the view, Angular replaces the ng-template and its contents with a comment.
+            If there is no structural directive and you merely wrap some elements in a ng-template, those elements disappear. 
+            </br></br>To use, you need to give the ng-template a hashtag name (unique id directive starting with #) and you need another element with a *ngIf, for example.
+            In the *ngIf, you will have <code>"someCondition else #myTemplateId"</code>.  This way that element or your template will be rendered based on someCondition, but not both.
+            Can also have 2 templates, and <code>*ngIf="someCondition; #myTemplateId1 else #myTemplateId2"</code> . Exclusively either template will be rendered.
+            </br></br>It helps us create dynamic templates that can be customized and configured.`,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `What is ng-container? ng-content?`,
+            `<u>ng-container</u> - simple directive that allows you to group elements in a template that doesn’t interfere with styles or layout because Angular doesn’t put it in the DOM.
+            Use it to wrap a bunch of elements together to show/hide.
+            </br></br><u>ng-conent</u> - Allows you to place elements in between the opening and closing tags of your component element. Think 'children' in react.  
+            The component needs to declare <code> ng-content /ng-content </code> in its template for this to work.
+            `,
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
@@ -728,14 +769,23 @@ export default class DataService {
                 {{obs$ | async}}
             </code>
             </br></br>
-            5. 3rd party libraries like <strong>untilDestroyed,subsink</strong>.
+            5. 3rd party libraries like <strong>untilDestroyed, subsink</strong>.
             
             `,
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
             `What are template expressions?`,
-            `The .ts data you access in the HTML.  Whatever goes in the double moustache brackets, and any other way you use ts in the template.`,
+            `The .ts data you access in the HTML.  Whatever goes in the double moustache brackets, and any other way you use TS in the template.`,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `ViewChild vs ContentChild?`,
+            `
+            <strong>ViewChild / ViewChildren</strong> allows you to reference elements within the template of your component.  In othe words, it's child elements.
+            </br></br><strong>ContentChild / ContentChildren</strong> allows you to reference the elements that would appear inside of ng-content in your template.  
+            In other words, in your component's parent component's template, the elements that go between your component's opening and closing tags.
+            `,
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
@@ -744,10 +794,10 @@ export default class DataService {
             <br><br>
             <code>
             const routes: Routes = [
-            <br>     {
-            <br>      path: 'items',
-            <br>      loadChildren: () =&gt; import('./items/items.module').then(m =&gt; m.ItemsModule)
-            <br>     }
+            <br>&emsp;     {
+            <br>&emsp;&emsp;      path: 'items',
+            <br>&emsp;&emsp;      loadChildren: () =&gt; import('./items/items.module').then(m =&gt; m.ItemsModule)
+            <br>&emsp;     }
             <br>];`,
             Category.ANGULAR
         ));
@@ -757,6 +807,15 @@ export default class DataService {
             and handles the 2 kinds of errors: Client (JS) and Server (HTTPResponse).  To add it, add the following to RootModule: <code>providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}]</code>.
             You can check which kind of error it is by doing the following: <code>if(error instanceof HttpErrorResponse)</code>.
             You can use HTTPInterceptor to intercept responses and retry, transform, or handle them before passing them along to the global ErrorHandler service.`,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `Injection Token: what is it and how to use?`,
+            `<strong>InectionToken</strong> creates a token that can be used in a DI container. It is used when you want to inject an interface, callable type, array, or parameterized type.
+            </br>It has 2 parts: the type and the value. 
+            </br>&emsp; - the type should be the component type (or, better yet, interface), and the value can be a key (string)
+            </br></br>To add the token to a component class, add it to the providers array as <code>{ provides: MYTOKEN, useExisting: MyComponent }</code> where MyComponent is the component class.
+            </br></br>To use it: in your high-level component: <code>@ContentChild(MYTOKEN as any, {static: true})</code>`,
             Category.ANGULAR
         ));
         questions.push(new Question(id++,
@@ -792,7 +851,7 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `What triggers change detection in Angular?`,
-            `1. Any browser event: click, keyup, etc...
+            `1. Any browser event: mouse move/click, key press, etc...
             <br>2. setInterval(), setTimeout()
             <br>3. HTTP Request via XMLHttpRequest</div>`,
             Category.ANGULAR
@@ -803,6 +862,66 @@ export default class DataService {
             The component defined as the target for the route in app.routing.ts (or the routing.module.ts file of a lazy-loaded component).  The component is loaded inside of the <code>router-outlet</code> directive.
             There can only be one <code>router-outlet</code>.
             <br>2. Router.navigate.  The built-in Router class (ex RouterService) has a method called navigate which accepts an array of url route params.`,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `What are some RxJS operators?`,
+            `Operators are functions. There are two kinds of operators: 
+            </br><strong>Pipeable Operators</strong> are the kind that can be piped to Observables.  When called, they do not change the existing Observable instance. 
+            Instead, they return a new Observable, whose subscription logic is based on the first Observable. Pure functions.
+            </br><strong>Creation Operators</strong> are the other kind of operator, which can be called as standalone functions to create a new Observable.
+
+            </br></br><strong>pipe</strong> - Allows for elegantly grouping multiple pipable operators. Takes a comma-separated list of operators as input params.
+            </br></br><strong>of</strong> - Converts the arguments to an observable sequence.   
+            </br></br><strong>from</strong> - Creates an Observable from an Array, an array-like object, a Promise, an iterable object, or an Observable-like object.
+            </br></br><strong>filter</strong> - Filter items emitted by the source Observable by only emitting those that satisfy a specified predicate.
+            </br></br><strong>map</strong> - Transform value of stream into some other value.  Applies a given <code>project</code> function to each value emitted by the source Observable, and emits the resulting values as an Observable.
+            </br></br><strong>tap</strong> - Used to perform side-effects for notifications from the source observable.
+            </br></br><strong>flatMap, switchMap, combineLatest</strong> - take streams ans use them in other streams.
+            </br></br><strong>take, takeUntil, takeWhile, takeLast</strong> - Emits only the specified values emitted by the source Observable.
+            `,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `What's the difference between Subject and BehaviorSubject?`,
+            `<strong>Subject</strong> is a special type of Observable that allows values to be multicasted to many Observers. Plain Observables are unicast.
+            </br></br><strong>BehaviorSubject</strong> is a type of Subject, which has a notion of "the current value". It stores the latest value emitted to its consumers, 
+            and whenever a new Observer subscribes, it will immediately receive the "current value" from the BehaviorSubject.  Subject does not store a value.
+            </br></br><strong>AsyncSubject</strong> is a Subject variant where only the last value of the Observable execution is sent to its observers, and only when the execution completes.
+            How to complete: <code>subject.Complete();</code>
+            `,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `Hot vs cold Observables?`,
+            `Cold Observables only start to emit values when they are subscribed to.  Hot Observables always emit.
+            </br>For Cold Observables, the data source is created inside of the Observable.  For Hot Observables, it is created outside.
+            </br>Because of this, Cold Observables are unicast (different value every sub), and Hot Observables are multicatst (same value).
+            </br>All varieties of RxJS Subjects are Hot Observables.  HttpClient methods (get/put/etc) are Cold Observables.  
+            If you use the same async pipe multiple times in template, you will subscribe multiple times, and you will call the HttpClient method multiple times!
+            Use <code>.pipe(shareReplay())</code> on HttpClient method to fix!`,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `What is trackBy?`,
+            `
+            TrackBy is used with <code>*ngFor</code>... Angular will render the whole list by default if one item changed.
+            This is because angular is not aware of uniqueness or order of elements inside array.
+            <br>Used like this:	
+            <br>&emsp;    - <code>trackBy: myTrackingFunction</code>	
+            <br>&emsp;    - in .ts: <code>myTrackingFunction(index, value) {return value} </code>
+            <br>&emsp;    - must return unique value (like 'key' in react)
+            `,
+            Category.ANGULAR
+        ));
+        questions.push(new Question(id++,
+            `What are some ways to optimize your angular app?`,
+            `- AOT compilation (decreases bundle size)
+            <br> - Lazy loading also decreases bundle size
+            <br> - Provided in root (allows tree-shaking)
+            <br> - Use OnPush changeDetection Strategy
+            <br> - Use trackby with ngFor
+            <br> - Use async pipe to reduce change detection re-render and auto unsubscribe`,
             Category.ANGULAR
         ));
         // questions.push(new Question(id++,
@@ -944,6 +1063,14 @@ export default class DataService {
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
+            `Difference between for-in and for-of?`,
+            `<u>for-in</u> - iterates over the <strong>index (keys)</strong> of an array or object.  Ex: <code>for (var i in myArr) </code>
+            
+            </br></br><u>for-of</u> - (new in ES6) iterates over the <strong>values</strong> of an array or object. Ex: <code>for (var i of myArr) </code>
+            `,
+            Category.JSWEBDOM
+        ));
+        questions.push(new Question(id++,
             `What is a closure, how does it work?  What is variable scope?`,
             `A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). 
             In other words, a closure gives you access to an outer function's scope from an inner function. 
@@ -978,7 +1105,11 @@ export default class DataService {
             `Explain the event loop.`,
             `The Event Loop has one simple job — to monitor the Call Stack and the Callback Queue. If the Call Stack is empty, 
             it will take the first event from the queue and will push it to the Call Stack, which effectively runs it. 
-            Such an iteration is called a tick in the Event Loop. Each event is just a function callback.`,
+            Such an iteration is called a tick in the Event Loop. Each event is just a function callback.
+            
+            </br></br>
+            Macrotasks and Microtasks: Microtasks usually created by promises, or async/await calls.  Macrotasks are all other tasks (callbacks)
+            Immediately after every macrotask, the engine executes all tasks from microtask queue, prior to running any other macrotasks or rendering or anything else.`,
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
@@ -1001,12 +1132,18 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `What is event bubbling?`,
-            `<strong>Event Flow</strong> - Event flow is the order in which event is received on the web page. If you click on an element like on div or on the button, which is nested to other elements,
-            before the click is performed on the target element, it must trigger the click event each of its parent elements first, starting at the top with the global window object. 
-            By default, every element of HTML is child of the window object.
+            `<strong>Event Flow</strong> - Event flow is the order in which event is received on the web page. If you click on an element like on div or button, which is nested in other elements,
+            before the click is performed on the target element, it must trigger the click event on each of its parent elements first, starting at the top with the global window object. 
+            By default, every element of HTML is a child of the window object.
            
            <br><br><strong>Event Bubbling</strong> - When an event is raised on an element, it bubbles up to the next element (parent), and if there is an event listener registered, the callback will be fired,
-           and this process will continue all the way up.  Use <code>stopPropagation()</code> to stop event from bubbling.`,
+           and this process will continue all the way up.  Use <code>stopPropagation()</code> to stop event from bubbling.
+           
+           <br><br><strong>Event Capturing</strong> - When an event is raised on an element, the parent callback will be fired first, then child all the way down to last child. 
+           Opposite of Event bubbling.
+
+           <br><br>Which is used when?  Browsers support both, use a 3rd <code>bool</code> param to <code>addEventListener()</code>.  Nowadays you don't need to worry about these.
+           `,
             Category.JSWEBDOM
         ));
         questions.push(new Question(id++,
@@ -1116,7 +1253,7 @@ export default class DataService {
         ));
         questions.push(new Question(id++,
             `What do .apply() .call() .assign() .create() do?`,
-            `.apply() is often used to chain constructors for an object. Can also use it to append array to another.  apply(arr1, arr2)
+            `.apply() is often used to chain constructors for an object. Can also use it to append array to another.  <code>apply(arr1, arr2)</code>
             </br>While the syntax of this function is almost identical to that of call(), the fundamental difference is that call() accepts an argument list, while apply() accepts a single array of arguments.
             </br><code>
             </br>Function.prototype.construct = function(aArgs) {
@@ -1471,7 +1608,11 @@ export default class DataService {
             </br>
             </br>&emsp;-    Given: the initial context at the beginning of the scenario, in one or more clauses;
             </br>&emsp;-    When: the event that triggers the scenario;
-            </br>&emsp;-    Then: the expected outcome, in one or more clauses.
+            </br>&emsp;-    Then: the expected outcome, in one or more clauses
+            
+            </br></br>
+            Benefits: Communication, inclusivity, involvement, speed of development.  BDD is carried out in a common language understood by all members of product team.
+            
             `,
             Category.GENERAL
         ));    
@@ -1540,7 +1681,7 @@ export default class DataService {
             `What is a load balancer?  Server farm?`,
             `Load balancing is defined as the methodical and efficient distribution of network or application traffic across multiple servers in a server farm. 
             Each load balancer sits between client devices and backend servers, receiving and then distributing incoming requests to any available server capable of fulfilling them.
-            A server farm is a set of many servers interconnected together and housed within the same physical facility. 
+            </br></br>A server farm is a set of many servers interconnected together and housed within the same physical facility. 
             A server farm provides the combined computing power of many servers by simultaneously executing one or more applications or services.`,
             Category.GENERAL
         ));

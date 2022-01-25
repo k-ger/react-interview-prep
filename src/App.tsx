@@ -9,7 +9,7 @@ class App extends React.Component {
         <Home></Home>
         <footer className="">
           <div className="mb-2 text-gray-400 text-xs sm:text-sm text-center">
-              ©2021 Created with Create React App, Tailwind CSS.
+              ©2022 Created with Create React App, Tailwind CSS.
           </div>
         </footer>
       </BrowserRouter>
