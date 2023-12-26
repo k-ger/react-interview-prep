@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-gray-100;
+  overflow: overlay;
+  height: 100%;
+  background: #ebebeb;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+/* begin toggle region */
+
+.toggle-checkbox:checked {
+  @apply right-0;
+  @apply border-indigo-400;
+  /* right: 0;
+  border-color: #68D391; */
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  @apply bg-indigo-600;
+  /* background-color: #68D391; */
+}
+
+.toggle-checkbox {
+  transition: background-color 0.2s, border-color 0.2s, right 0.5s;
+}
+
+/* end toggle region */
+
+/* .expandables-container > :last-child{
+  box-shadow: none;
+} */
